@@ -13,7 +13,7 @@ const {
 } = Astro.props;
 ---
 
-<section class="relative h-screen flex items-end overflow-hidden">
+<section class="relative min-h-screen flex items-center overflow-hidden pt-20">
   <div class="absolute inset-0">
     <img
       src={image}
@@ -26,7 +26,7 @@ const {
     <div class="hero-overlay absolute inset-0"></div>
   </div>
 
-  <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 pb-20 md:pb-28 w-full">
+  <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 w-full">
     <div class="max-w-3xl">
       <h1 class="hero-title font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-[0.95] tracking-tight mb-8">
         <span>{titlePlain}&nbsp;</span><span class="italic text-accent">{titleAccent}</span>
@@ -44,10 +44,10 @@ const {
         </a>
       </div>
     </div>
+  </div>
 
-    <div class="hero-scroll absolute bottom-8 right-6 lg:right-12 hidden md:flex flex-col items-center gap-3">
-      <span class="text-[10px] tracking-[0.3em] uppercase text-brand-400 rotate-90 origin-center translate-x-4 mb-8">Scroll</span>
-      <div class="scroll-arrow w-px h-12 bg-gradient-to-b from-accent to-transparent"></div>
-    </div>
+  <div class="hero-scroll absolute bottom-8 right-6 lg:right-12 hidden md:flex flex-col items-center gap-3">
+    <span class="text-[10px] tracking-[0.3em] uppercase text-brand-400 rotate-90 origin-center translate-x-4 mb-8">Scroll</span>
+    <div class="scroll-arrow w-px h-12 bg-gradient-to-b from-accent to-transparent"></div>
   </div>
 </section>
