@@ -1,0 +1,51 @@
+---
+interface Member {
+  name: string;
+  role: string;
+  photo?: string | null;
+}
+interface Props {
+  members: Member[];
+}
+const { members } = Astro.props;
+
+function initials(name: string) {
+  return name
+    .replace(/^Bc\.?\s*/i, '')
+    .split(/\s+/)
+    .map((w) => w[0])
+    .filter(Boolean)
+    .slice(0, 2)
+    .join('')
+    .toUpperCase();
+}
+---
+
+<section id="tym" class="py-24 md:py-36">
+  <div class="max-w-7xl mx-auto px-6 lg:px-12">
+    <div class="text-center mb-20 reveal">
+      <p class="text-accent text-xs font-medium tracking-[0.3em] uppercase mb-4">Kdo za tím stojí</p>
+      <h2 class="font-serif text-4xl md:text-6xl font-bold">Náš <span class="italic text-accent">tým</span></h2>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 max-w-5xl mx-auto" id="teamGrid">
+      {
+        members.map((m) => (
+          <div class="team-card reveal">
+            <div class="aspect-[3/4] rounded-3xl overflow-hidden bg-brand-900 mb-6 relative">
+              {m.photo ? (
+                <img src={m.photo} alt={m.name} class="team-img w-full h-full object-cover" loading="lazy" decoding="async" />
+              ) : (
+                <div class="absolute inset-0 flex items-center justify-center text-accent text-6xl font-serif">
+                  {initials(m.name)}
+                </div>
+              )}
+            </div>
+            <h3 class="font-serif text-xl font-bold">{m.name}</h3>
+            <p class="text-brand-400 text-sm mt-1 font-light">{m.role}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

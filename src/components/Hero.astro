@@ -1,0 +1,53 @@
+---
+interface Props {
+  titlePlain: string;
+  titleAccent: string;
+  subtitle: string;
+  image?: string;
+}
+const {
+  titlePlain,
+  titleAccent,
+  subtitle,
+  image = '/images/exterior-dark-full.webp',
+} = Astro.props;
+---
+
+<section class="relative h-screen flex items-end overflow-hidden">
+  <div class="absolute inset-0">
+    <img
+      src={image}
+      alt="Atelier Karczech – exteriér"
+      class="parallax-hero w-full h-[120%] object-cover object-center"
+      id="heroImg"
+      fetchpriority="high"
+      decoding="async"
+    />
+    <div class="hero-overlay absolute inset-0"></div>
+  </div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 pb-20 md:pb-28 w-full">
+    <div class="max-w-3xl">
+      <h1 class="hero-title font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-[0.95] tracking-tight mb-8">
+        <span>{titlePlain}&nbsp;</span><span class="italic text-accent">{titleAccent}</span>
+      </h1>
+      <div class="hero-line h-px bg-accent mb-8"></div>
+      <p class="hero-fade text-brand-300 text-lg md:text-xl leading-relaxed max-w-xl font-light">
+        {subtitle}
+      </p>
+      <div class="hero-cta flex flex-col sm:flex-row gap-4 mt-10">
+        <a href="#kontakt" class="btn-primary bg-accent text-brand-950 px-8 py-4 rounded-full font-semibold text-center text-sm tracking-wide uppercase hover:text-brand-950 transition-colors">
+          Domluvit konzultaci
+        </a>
+        <a href="#portfolio" class="btn-outline text-white px-8 py-4 rounded-full font-medium text-center text-sm tracking-wide uppercase hover:text-accent transition-colors">
+          Portfolio
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-scroll absolute bottom-8 right-6 lg:right-12 hidden md:flex flex-col items-center gap-3">
+      <span class="text-[10px] tracking-[0.3em] uppercase text-brand-400 rotate-90 origin-center translate-x-4 mb-8">Scroll</span>
+      <div class="scroll-arrow w-px h-12 bg-gradient-to-b from-accent to-transparent"></div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,21 @@
+---
+const { image = '/images/house-pool.webp' } = Astro.props;
+---
+
+<section class="py-24 md:py-36 relative overflow-hidden">
+  <div class="absolute inset-0">
+    <img src={image} alt="" class="w-full h-full object-cover opacity-20" loading="lazy" decoding="async" />
+    <div class="absolute inset-0 bg-gradient-to-r from-brand-950 via-brand-950/95 to-brand-950/80"></div>
+  </div>
+  <div class="relative max-w-4xl mx-auto px-6 lg:px-12 text-center reveal">
+    <h2 class="font-serif text-4xl md:text-6xl font-bold leading-tight mb-6">
+      Máte v hlavě<br /><span class="italic text-accent">projekt?</span>
+    </h2>
+    <p class="text-brand-300 text-lg font-light max-w-lg mx-auto mb-10">
+      Ozvěte se nám a nezávazně probereme vaše možnosti. První konzultace je zdarma.
+    </p>
+    <a href="#kontakt" class="btn-primary inline-block bg-accent text-brand-950 px-10 py-5 rounded-full font-semibold text-sm tracking-wide uppercase hover:text-brand-950 transition-colors">
+      Domluvit konzultaci zdarma
+    </a>
+  </div>
+</section>

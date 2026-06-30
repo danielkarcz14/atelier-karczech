@@ -1,0 +1,25 @@
+---
+const items = [
+  'Architektura',
+  'Interiérový design',
+  'Projektová dokumentace',
+  'BIM',
+  'Inženýring',
+  'Technický dozor',
+];
+// Duplicated so the track can loop seamlessly.
+const loop = [...items, ...items];
+---
+
+<div class="py-6 border-y border-brand-800/30 overflow-hidden">
+  <div class="marquee-track flex whitespace-nowrap">
+    {
+      loop.map((item) => (
+        <>
+          <span class="text-sm tracking-[0.2em] uppercase text-brand-600 mx-8">{item}</span>
+          <span class="text-accent mx-4">&mdash;</span>
+        </>
+      ))
+    }
+  </div>
+</div>

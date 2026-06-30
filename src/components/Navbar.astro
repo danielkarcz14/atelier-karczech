@@ -1,0 +1,56 @@
+---
+interface Props {
+  phone: string;
+  phoneHref: string;
+  email: string;
+}
+const { phone, phoneHref, email } = Astro.props;
+---
+
+<nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-500 border-b border-transparent">
+  <div class="max-w-7xl mx-auto px-6 lg:px-12 py-5 flex items-center justify-between">
+    <a href="#" class="relative z-10">
+      <span class="font-serif text-2xl font-bold tracking-tight text-white">
+        Atelier<span class="text-accent">Karczech</span>
+      </span>
+    </a>
+
+    <div class="hidden lg:flex items-center gap-10">
+      <a href="#portfolio" class="nav-link text-sm font-light tracking-wide text-brand-300 hover:text-white transition-colors">Portfolio</a>
+      <a href="#proces" class="nav-link text-sm font-light tracking-wide text-brand-300 hover:text-white transition-colors">Proces</a>
+      <a href="#bim" class="nav-link text-sm font-light tracking-wide text-brand-300 hover:text-white transition-colors">BIM</a>
+      <a href="#tym" class="nav-link text-sm font-light tracking-wide text-brand-300 hover:text-white transition-colors">Tým</a>
+      <a href="#kontakt" class="btn-primary bg-brand-950 border border-accent/40 text-accent px-6 py-2.5 rounded-full text-sm font-medium hover:text-brand-950 transition-colors">
+        Domluvit konzultaci
+      </a>
+    </div>
+
+    <button id="menuBtn" class="lg:hidden relative z-10 p-2 group" aria-label="Menu">
+      <div class="flex flex-col gap-1.5">
+        <span class="block w-6 h-px bg-white transition-transform origin-center group-[.active]:rotate-45 group-[.active]:translate-y-[3.5px]"></span>
+        <span class="block w-6 h-px bg-white transition-opacity group-[.active]:opacity-0"></span>
+        <span class="block w-4 h-px bg-white transition-all origin-center group-[.active]:w-6 group-[.active]:-rotate-45 group-[.active]:-translate-y-[3.5px]"></span>
+      </div>
+    </button>
+  </div>
+</nav>
+
+<div id="mobileOverlay" class="mobile-overlay fixed inset-0 bg-black/60 z-40 lg:hidden"></div>
+
+<div id="mobileMenu" class="mobile-menu fixed top-0 right-0 h-full w-80 bg-brand-950 border-l border-brand-800/50 z-40 lg:hidden">
+  <div class="flex flex-col justify-center h-full px-10">
+    <div class="space-y-8">
+      <a href="#portfolio" class="block text-3xl font-serif text-white hover:text-accent transition-colors">Portfolio</a>
+      <a href="#proces" class="block text-3xl font-serif text-white hover:text-accent transition-colors">Proces</a>
+      <a href="#bim" class="block text-3xl font-serif text-white hover:text-accent transition-colors">BIM</a>
+      <a href="#tym" class="block text-3xl font-serif text-white hover:text-accent transition-colors">Tým</a>
+      <div class="pt-4 border-t border-brand-800/50">
+        <a href="#kontakt" class="block text-3xl font-serif text-accent">Kontakt</a>
+      </div>
+    </div>
+    <div class="mt-12 space-y-3 text-sm text-brand-400">
+      <a href={`tel:${phoneHref}`} class="block hover:text-white transition">{phone}</a>
+      <a href={`mailto:${email}`} class="block hover:text-white transition">{email}</a>
+    </div>
+  </div>
+</div>
