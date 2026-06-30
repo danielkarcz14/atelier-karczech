@@ -1,7 +1,9 @@
-heroTitlePlain: "Navrhujeme prostory,"
-heroTitleAccent: "ve kterých chcete žít."
-heroSubtitle: "Od prvního setkání až po realizaci. Každý projekt řešíme s důrazem na detail, funkci a vaši spokojenost."
-contactPerson: "Bc. Filip Karcz"
-contactPhone: "732 993 086"
-contactPhoneHref: "+420732993086"
-contactEmail: "karcz@atelierkarczech.cz"
+heroTitlePlain: Navrhujeme prostory,
+heroTitleAccent: ve kterých chcete žít.
+heroSubtitle: >-
+  Od prvního setkání až po realizaci. Každý projekt řešíme s důrazem na detail,
+  funkci a vaši spokojenost.
+contactPerson: Bc. Filip Karcz
+contactPhone: 732 993 086
+contactPhoneHref: '+420732993086'
+contactEmail: karcz@atelierkarczech.cz
