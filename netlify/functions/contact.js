@@ -1,4 +1,4 @@
-const nodemailer = require('nodemailer');
+import nodemailer from 'nodemailer';
 
 const JSON_HEADERS = { 'Content-Type': 'application/json; charset=utf-8' };
 
@@ -15,7 +15,7 @@ function escapeHtml(s) {
     .replace(/'/g, '&#39;');
 }
 
-exports.handler = async (event) => {
+export const handler = async (event) => {
   if (event.httpMethod !== 'POST') {
     return respond(405, { ok: false, error: 'Metoda neni povolena.' });
   }
