@@ -71,9 +71,10 @@ const contactPerson = settings?.contactPerson ?? 'Bc. Filip Karcz';
 const contactPhone = settings?.contactPhone ?? '732 993 086';
 const contactPhoneHref = settings?.contactPhoneHref ?? '+420732993086';
 const contactEmail = settings?.contactEmail ?? 'karcz@atelierkarczech.cz';
+const favicon = settings?.favicon ? img(settings.favicon) : '/favicon.svg';
 ---
 
-<Layout>
+<Layout favicon={favicon}>
   <Cursor />
   <Navbar phone={contactPhone} phoneHref={contactPhoneHref} email={contactEmail} />
 

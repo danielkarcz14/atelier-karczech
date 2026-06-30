@@ -123,6 +123,13 @@ export default config({
       path: 'src/content/settings/general',
       format: { data: 'yaml' },
       schema: {
+        favicon: fields.image({
+          label: 'Favicon (ikona v záložce prohlížeče)',
+          description:
+            'Malý čtvercový obrázek, ideálně 512×512 px (PNG). Když zůstane prázdné, použije se výchozí.',
+          directory: 'public/images',
+          publicPath: '/images/',
+        }),
         heroTitlePlain: fields.text({
           label: 'Nadpis hero – běžná část',
           description: 'První, nebarevná část velkého nadpisu.',

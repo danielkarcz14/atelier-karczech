@@ -4,11 +4,13 @@ import '../styles/global.css';
 interface Props {
   title?: string;
   description?: string;
+  favicon?: string;
 }
 
 const {
   title = 'Atelier Karczech | Architektura & Projekce',
   description = 'Atelier Karczech – architektonický ateliér. Navrhujeme v BIMu, od prvního náčrtu po realizaci.',
+  favicon = '/favicon.svg',
 } = Astro.props;
 ---
 
@@ -19,6 +21,9 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
+
+    <link rel="icon" href={favicon} />
+    <link rel="apple-touch-icon" href={favicon} />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
