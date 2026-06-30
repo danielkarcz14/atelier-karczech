@@ -13,5 +13,6 @@ export const collections = {
   portfolio: dataCollection('portfolio'),
   team: dataCollection('team'),
   process: dataCollection('process'),
+  bim: dataCollection('bim'),
   settings: dataCollection('settings'),
 };

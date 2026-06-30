@@ -52,6 +52,15 @@ const processSteps = (await reader.collections.process.all())
     body: entry.body,
   }));
 
+const bimRenders = (await reader.collections.bim.all())
+  .sort(byOrder)
+  .map(({ entry }) => ({
+    title: entry.title,
+    image: img(entry.image),
+    imageFull: img(entry.imageFull),
+    alt: entry.alt,
+  }));
+
 // Fallbacks in case the settings singleton is missing.
 const heroTitlePlain = settings?.heroTitlePlain ?? 'Navrhujeme prostory,';
 const heroTitleAccent = settings?.heroTitleAccent ?? 've kterých chcete žít.';
@@ -78,7 +87,7 @@ const contactEmail = settings?.contactEmail ?? 'karcz@atelierkarczech.cz';
   <Process steps={processSteps} />
   <div class="section-divider max-w-7xl mx-auto"></div>
 
-  <Bim />
+  <Bim renders={bimRenders} />
   <div class="section-divider max-w-7xl mx-auto"></div>
 
   <Team members={teamMembers} />

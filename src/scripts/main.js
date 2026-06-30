@@ -7,6 +7,7 @@ function init() {
   initScrollReveal();
   initCounters();
   initPortfolioDrag();
+  initBimSlider();
   initStepStagger();
   initContactForm();
 }
@@ -88,7 +89,7 @@ function initLightbox() {
     document.body.style.overflow = '';
   }
 
-  document.querySelectorAll('.portfolio-card[data-full]').forEach((card) => {
+  document.querySelectorAll('.portfolio-card[data-full], .bim-slide[data-full]').forEach((card) => {
     card.addEventListener('click', () => open(card));
   });
 
@@ -229,6 +230,39 @@ function initPortfolioDrag() {
   track.addEventListener('scroll', updateArrows, { passive: true });
   window.addEventListener('resize', updateArrows);
   updateArrows();
+}
+
+function initBimSlider() {
+  const track = document.getElementById('bimTrack');
+  if (!track) return;
+
+  const slides = [...track.querySelectorAll('.bim-slide')];
+  const dots = [...document.querySelectorAll('#bimDots .bim-dot')];
+  const prevBtn = document.getElementById('bimPrev');
+  const nextBtn = document.getElementById('bimNext');
+  if (slides.length === 0) return;
+
+  // A single render needs no controls.
+  if (slides.length < 2) {
+    prevBtn?.remove();
+    nextBtn?.remove();
+    document.getElementById('bimDots')?.remove();
+    return;
+  }
+
+  let index = 0;
+
+  function go(target) {
+    index = (target + slides.length) % slides.length;
+    track.style.transform = `translateX(-${index * 100}%)`;
+    dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
+  }
+
+  prevBtn?.addEventListener('click', () => go(index - 1));
+  nextBtn?.addEventListener('click', () => go(index + 1));
+  dots.forEach((dot, i) => dot.addEventListener('click', () => go(i)));
+
+  go(0);
 }
 
 function initStepStagger() {

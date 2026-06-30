@@ -68,6 +68,36 @@ export default config({
       },
     }),
 
+    bim: collection({
+      label: 'BIM vizualizace',
+      slugField: 'title',
+      path: 'src/content/bim/*',
+      format: { data: 'yaml' },
+      columns: ['title'],
+      entryLayout: 'form',
+      schema: {
+        title: fields.slug({ name: { label: 'Název vizualizace' } }),
+        order: fields.integer({
+          label: 'Pořadí',
+          description: 'Nižší číslo = dříve v galerii',
+          defaultValue: 0,
+        }),
+        image: fields.image({
+          label: 'Náhledový obrázek (menší, do galerie)',
+          directory: 'public/images',
+          publicPath: '/images/',
+          validation: { isRequired: true },
+        }),
+        imageFull: fields.image({
+          label: 'Plný obrázek (velký, do zvětšení)',
+          directory: 'public/images',
+          publicPath: '/images/',
+          validation: { isRequired: true },
+        }),
+        alt: fields.text({ label: 'Popis obrázku (alt text)' }),
+      },
+    }),
+
     process: collection({
       label: 'Proces (kroky spolupráce)',
       slugField: 'title',
