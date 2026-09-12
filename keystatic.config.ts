@@ -62,8 +62,10 @@ export default config({
         order: fields.integer({ label: 'Pořadí', defaultValue: 0 }),
         photo: fields.image({
           label: 'Fotka',
-          directory: 'public/images/team',
-          publicPath: '/images/team/',
+          description:
+            'Nahrané fotky jsou automaticky komprimovány a optimalizovány při buildu.',
+          directory: 'src/assets/team',
+          publicPath: '/src/assets/team/',
         }),
       },
     }),

@@ -1,8 +1,10 @@
 ---
+import { Image } from 'astro:assets';
+
 interface Member {
   name: string;
   role: string;
-  photo?: string | null;
+  photo?: ImageMetadata | null;
 }
 interface Props {
   members: Member[];
@@ -34,7 +36,15 @@ function initials(name: string) {
           <div class="team-card reveal">
             <div class="aspect-[3/4] rounded-3xl overflow-hidden bg-brand-900 mb-6 relative">
               {m.photo ? (
-                <img src={m.photo} alt={m.name} class="team-img w-full h-full object-cover" loading="lazy" decoding="async" />
+                <Image
+                  src={m.photo}
+                  alt={m.name}
+                  widths={[400, 600, 900]}
+                  sizes="(min-width: 1024px) 300px, (min-width: 640px) 45vw, 90vw"
+                  class="team-img w-full h-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
               ) : (
                 <div class="absolute inset-0 flex items-center justify-center text-accent text-6xl font-serif">
                   {initials(m.name)}

@@ -26,6 +26,20 @@ const byOrder = (a: { entry: { order: number } }, b: { entry: { order: number } 
 // Keystatic stores only the filename for image fields, so prepend the public path.
 const img = (file: string | null, base = '/images/') => (file ? `${base}${file}` : '');
 
+// Team photos live in src/assets/team so Astro's build pipeline can compress
+// and generate responsive variants. Keystatic stores only the filename, so we
+// import every file at build time and look it up by basename.
+const teamPhotoModules = import.meta.glob<{ default: ImageMetadata }>(
+  '/src/assets/team/*.{webp,jpg,jpeg,png,avif}',
+  { eager: true },
+);
+const teamPhotos = new Map<string, ImageMetadata>(
+  Object.entries(teamPhotoModules).map(([path, mod]) => [
+    path.split('/').pop() ?? '',
+    mod.default,
+  ]),
+);
+
 const portfolioItems = (await reader.collections.portfolio.all())
   .sort(byOrder)
   .map(({ entry }) => ({
@@ -41,7 +55,7 @@ const teamMembers = (await reader.collections.team.all())
   .map(({ entry }) => ({
     name: entry.name,
     role: entry.role,
-    photo: entry.photo ? img(entry.photo, '/images/team/') : null,
+    photo: entry.photo ? teamPhotos.get(entry.photo) ?? null : null,
   }));
 
 const processSteps = (await reader.collections.process.all())
