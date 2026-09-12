@@ -53,6 +53,37 @@ const { contactPerson, phone, phoneHref, email } = Astro.props;
               <a href={`mailto:${email}`} class="text-lg font-medium hover:text-accent transition-colors">{email}</a>
             </div>
           </div>
+
+          <div class="flex items-start gap-5">
+            <div class="w-14 h-14 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+              </svg>
+            </div>
+            <div>
+              <div class="text-[11px] tracking-[0.2em] uppercase text-brand-500 mb-1">Adresa</div>
+              <a
+                href="https://www.openstreetmap.org/?mlat=49.7301588&mlon=18.6167863#map=18/49.7301588/18.6167863"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-lg font-medium hover:text-accent transition-colors not-italic"
+              >
+                Pod Zvonek 985/29<br />737 01 Český Těšín
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-10 rounded-3xl overflow-hidden border border-brand-800/50 aspect-[4/3]">
+          <iframe
+            src="https://www.openstreetmap.org/export/embed.html?bbox=18.6107863%2C49.7271588%2C18.6227863%2C49.7331588&amp;layer=mapnik&amp;marker=49.7301588%2C18.6167863"
+            class="w-full h-full"
+            style="border:0"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Mapa – Pod Zvonek 985/29, 737 01 Český Těšín"
+          ></iframe>
         </div>
       </div>
 
