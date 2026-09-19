@@ -2,8 +2,8 @@
 
 /* ============================================================
    FONTS – self-hosted variable fonts (no request leaves our server)
-   Two families, three faces. Each is a variable font, so a single file
-   covers every weight the design uses instead of one file per weight.
+   Josefin Sans carries the display type, Inter everything you read.
+   Both are variable, so one file covers every weight the design uses.
    The latin / latin-ext split is what Czech diacritics need; browsers
    fetch only the subsets a page actually contains.
    ============================================================ */
@@ -30,22 +30,22 @@
 }
 
 @font-face {
-  font-family: "Playfair Display Variable";
+  font-family: "Josefin Sans Variable";
   font-style: normal;
   font-display: swap;
-  font-weight: 400 900;
-  src: url("/fonts/playfair-display-latin-wght-normal.woff2") format("woff2-variations");
+  font-weight: 100 700;
+  src: url("/fonts/josefin-sans-latin-wght-normal.woff2") format("woff2-variations");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
     U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
     U+FEFF, U+FFFD;
 }
 
 @font-face {
-  font-family: "Playfair Display Variable";
+  font-family: "Josefin Sans Variable";
   font-style: normal;
   font-display: swap;
-  font-weight: 400 900;
-  src: url("/fonts/playfair-display-latin-ext-wght-normal.woff2") format("woff2-variations");
+  font-weight: 100 700;
+  src: url("/fonts/josefin-sans-latin-ext-wght-normal.woff2") format("woff2-variations");
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304,
     U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB,
     U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
@@ -72,7 +72,7 @@
   --color-accent-dark: #a68550;
 
   --font-sans: "Inter Variable", system-ui, -apple-system, Segoe UI, sans-serif;
-  --font-serif: "Playfair Display Variable", Georgia, Times New Roman, serif;
+  --font-display: "Josefin Sans Variable", system-ui, sans-serif;
 }
 
 /* ============================================================
@@ -107,6 +107,8 @@ html {
    A hairline rule, a small index/label row and the headline. Deliberately
    quiet so the projects carry the page. */
 .section-label {
+  font-family: var(--font-display);
+  font-weight: 500;
   display: flex;
   align-items: baseline;
   justify-content: space-between;
@@ -142,11 +144,11 @@ html {
 
 .section-title {
   margin-top: 1.25rem;
-  font-family: var(--font-sans);
-  font-weight: 800;
-  font-size: clamp(2rem, 4.5vw, 3.75rem);
-  line-height: 1.05;
-  letter-spacing: -0.035em;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.25rem, 5vw, 4.25rem);
+  line-height: 1.04;
+  letter-spacing: -0.015em;
 }
 
 /* Small pill above the hero headline. */

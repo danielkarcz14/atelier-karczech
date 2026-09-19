@@ -46,7 +46,7 @@ const { steps, heading } = Astro.props;
         steps.map((step) => (
           <div class="flow-step step-card">
             <span class="flow-number">{step.number}</span>
-            <h3 class="font-sans text-lg font-bold tracking-tight mb-3">{step.title}</h3>
+            <h3 class="font-display text-xl font-bold tracking-tight mb-3">{step.title}</h3>
             <p class="text-brand-400 text-sm font-light leading-relaxed">{step.body}</p>
           </div>
         ))

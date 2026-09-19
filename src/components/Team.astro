@@ -56,13 +56,13 @@ function initials(name: string) {
                   decoding="async"
                 />
               ) : (
-                <div class="absolute inset-0 flex items-center justify-center text-accent text-5xl font-sans font-bold">
+                <div class="absolute inset-0 flex items-center justify-center text-accent text-5xl font-display font-bold">
                   {initials(m.name)}
                 </div>
               )}
             </div>
             <div class="border-t border-brand-800/40 mt-5 pt-4">
-              <h3 class="font-sans text-lg font-bold tracking-tight">{m.name}</h3>
+              <h3 class="font-display text-xl font-bold tracking-tight">{m.name}</h3>
               <p class="text-brand-500 text-sm mt-1 font-light">{m.role}</p>
             </div>
           </div>
