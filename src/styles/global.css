@@ -445,14 +445,15 @@ html {
 }
 
 .bim-dot {
-  width: 18px;
+  width: 14px;
   height: 2px;
-  background: rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.3);
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: background 0.3s ease, width 0.3s ease;
 }
 
 .bim-dot.active {
+  width: 30px;
   background: #c8a97e;
 }
 
@@ -696,8 +697,38 @@ html {
   margin-top: 0;
 }
 
-.form-status--ok { color: #7fb88a; }
-.form-status--err { color: #e08a7a; }
+/* Success and failure were told apart by colour alone — and by the one pair
+   of colours that is hardest to tell apart. The mark carries the meaning;
+   the colour only reinforces it. */
+.form-status--ok,
+.form-status--err {
+  padding-left: 1.25rem;
+  text-indent: -1.25rem;
+}
+
+.form-status--ok::before,
+.form-status--err::before {
+  display: inline-block;
+  width: 1.25rem;
+  text-indent: 0;
+  font-weight: 600;
+}
+
+.form-status--ok {
+  color: #7fb88a;
+}
+
+.form-status--ok::before {
+  content: '✓';
+}
+
+.form-status--err {
+  color: #e08a7a;
+}
+
+.form-status--err::before {
+  content: '✕';
+}
 
 /* === COUNTER === */
 .counter {
