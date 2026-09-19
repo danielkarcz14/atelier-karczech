@@ -82,12 +82,12 @@ const meta = (item: Item) => [item.category, item.location, item.year].filter(Bo
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-14 mt-12" id="portfolioGrid">
       {
         items.map((item, i) => (
-          <button
-            type="button"
-            class="portfolio-card group text-left cursor-pointer"
+          /* A button may only contain phrasing content, so the card stays an
+             article and the button sits on top of it as the click target. */
+          <article
+            class="portfolio-card group relative cursor-pointer"
             data-full={item.imageFull}
             data-category={item.category}
-            aria-label={`Zvětšit projekt ${item.title}`}
           >
             <div class="aspect-[4/3] overflow-hidden bg-brand-900">
               <img
@@ -105,7 +105,11 @@ const meta = (item: Item) => [item.category, item.location, item.year].filter(Bo
               </h3>
             </div>
             <p class="text-brand-500 text-sm font-light mt-1 pl-8">{meta(item)}</p>
-          </button>
+
+            <button type="button" class="portfolio-open">
+              <span class="sr-only">Zvětšit projekt {item.title}</span>
+            </button>
+          </article>
         ))
       }
     </div>

@@ -1,0 +1,88 @@
+---
+// Business data for search engines, generated from the same CMS fields the
+// page renders, so the two cannot drift apart. Only facts we actually hold
+// are emitted — no ratings, prices or opening hours, which we do not know.
+interface Member {
+  name: string;
+  role: string;
+}
+
+interface Props {
+  name: string;
+  description: string;
+  siteUrl: string;
+  image?: string;
+  phone?: string;
+  email?: string;
+  addressLine1?: string;
+  addressLine2?: string;
+  lat?: string;
+  lon?: string;
+  team?: Member[];
+}
+
+const {
+  name,
+  description,
+  siteUrl,
+  image = '',
+  phone = '',
+  email = '',
+  addressLine1 = '',
+  addressLine2 = '',
+  lat = '',
+  lon = '',
+  team = [],
+} = Astro.props;
+
+// "737 01 Český Těšín" → postal code plus town.
+const addressMatch = addressLine2.match(/^\s*(\d{3}\s?\d{2})\s+(.*)$/);
+const postalCode = addressMatch ? addressMatch[1] : '';
+const locality = addressMatch ? addressMatch[2] : addressLine2;
+
+const latitude = Number(lat);
+const longitude = Number(lon);
+const hasCoords = Number.isFinite(latitude) && Number.isFinite(longitude) && (latitude !== 0 || longitude !== 0);
+
+const data: Record<string, unknown> = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  '@id': `${siteUrl}#organization`,
+  name,
+  description,
+  url: siteUrl,
+  knowsLanguage: 'cs',
+};
+
+if (image) data.image = new URL(image, siteUrl).href;
+if (phone) data.telephone = phone;
+if (email) data.email = email;
+
+if (addressLine1 || locality) {
+  data.address = {
+    '@type': 'PostalAddress',
+    ...(addressLine1 ? { streetAddress: addressLine1 } : {}),
+    ...(postalCode ? { postalCode } : {}),
+    ...(locality ? { addressLocality: locality } : {}),
+    addressCountry: 'CZ',
+  };
+}
+
+if (hasCoords) {
+  data.geo = { '@type': 'GeoCoordinates', latitude, longitude };
+}
+
+const staff = team.filter((member) => member.name);
+if (staff.length > 0) {
+  data.employee = staff.map((member) => ({
+    '@type': 'Person',
+    name: member.name,
+    ...(member.role ? { jobTitle: member.role } : {}),
+  }));
+}
+
+// Escaping "<" keeps a stray "</script>" inside any field from closing the tag.
+const json = JSON.stringify(data).replace(/</g, '\\u003c');
+---
+
+<script type="application/ld+json" set:html={json} is:inline />

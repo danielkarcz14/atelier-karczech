@@ -12,3 +12,27 @@
   from = "/api/contact"
   to = "/.netlify/functions/contact"
   status = 200
+
+# Bezpečnostní hlavičky. Záměrně bez plného CSP – web vkládá mapu
+# z OpenStreetMap a /keystatic je React aplikace, kterou by striktní
+# politika rozbila. Tohle jsou hlavičky, které nic nerozbijí.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Stránku nelze vložit do rámu na cizím webu (clickjacking).
+    X-Frame-Options = "SAMEORIGIN"
+    Content-Security-Policy = "frame-ancestors 'self'"
+    # Prohlížeč nesmí hádat typ souboru podle obsahu.
+    X-Content-Type-Options = "nosniff"
+    # Při odchodu na cizí web se pošle jen doména, ne celá adresa.
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    # Web nepotřebuje kameru, mikrofon ani polohu.
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+    # HSTS posílá Netlify samo; tady se jen přidává preload-ready delší doba.
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+
+# Písma se nemění, můžou se cachovat natrvalo.
+[[headers]]
+  for = "/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

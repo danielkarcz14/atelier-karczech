@@ -14,6 +14,7 @@ import CtaBanner from '../components/CtaBanner.astro';
 import Contact from '../components/Contact.astro';
 import Footer from '../components/Footer.astro';
 import Lightbox from '../components/Lightbox.astro';
+import StructuredData from '../components/StructuredData.astro';
 
 const reader = createReader(process.cwd(), keystaticConfig);
 
@@ -109,6 +110,20 @@ const heroMarquee = (heroContent?.marquee ?? []).filter(Boolean);
 ---
 
 <Layout title={siteTitle} description={siteDescription} favicon={favicon} ogImage={ogImage}>
+  <StructuredData
+    name={`${logoPlain} ${logoAccent}`.trim()}
+    description={siteDescription}
+    siteUrl={Astro.site?.href ?? 'https://atelierkarczech.cz/'}
+    image={ogImage || url(heroContent?.image)}
+    phone={contactPhoneHref}
+    email={contactEmail}
+    addressLine1={contact?.addressLine1 ?? ''}
+    addressLine2={contact?.addressLine2 ?? ''}
+    lat={contact?.mapLat ?? ''}
+    lon={contact?.mapLon ?? ''}
+    team={teamMembers.map((m) => ({ name: m.name, role: m.role }))}
+  />
+
   <Navbar
     logoPlain={logoPlain}
     logoAccent={logoAccent}

@@ -45,13 +45,20 @@ function closeMobileMenu() {
 
 function initLightbox() {
   const lightbox = document.getElementById('lightbox');
-  const lightboxImg = document.getElementById('lightboxImg');
-  if (!lightbox || !lightboxImg) return;
+  if (!lightbox) return;
+
+  // Created here rather than in the markup: an <img> with an empty src is
+  // invalid HTML, and there is nothing to show until a card is opened.
+  const lightboxImg = document.createElement('img');
+  lightboxImg.id = 'lightboxImg';
+  lightboxImg.alt = '';
+  lightbox.appendChild(lightboxImg);
 
   function open(card) {
     const img = card.querySelector('img');
     if (!img) return;
     lightboxImg.src = card.dataset.full || img.currentSrc || img.src;
+    lightboxImg.alt = img.alt || '';
     lightbox.classList.add('active');
     document.body.style.overflow = 'hidden';
   }

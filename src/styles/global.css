@@ -376,6 +376,22 @@ html {
 .portfolio-arrow.next { right: 1rem; }
 
 /* Hidden when the track reaches that end */
+/* The whole card is clickable, but only this button is focusable, so the
+   keyboard gets the same affordance the mouse has. */
+.portfolio-open {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.portfolio-open:focus-visible {
+  outline: 2px solid #c8a97e;
+  outline-offset: 4px;
+}
+
 .portfolio-card img {
   transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 }
