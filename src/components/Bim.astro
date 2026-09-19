@@ -1,14 +1,39 @@
 ---
+import SectionTitle from './SectionTitle.astro';
+
 interface Render {
   title: string;
   image: string;
   imageFull: string;
   alt?: string;
 }
+
+interface Stat {
+  value: string;
+  suffix?: string;
+  label: string;
+}
+
+interface Heading {
+  eyebrow?: string;
+  titlePlain?: string;
+  titleAccent?: string;
+  titleLayout?: string;
+  description?: string;
+  stats?: Stat[];
+}
+
 interface Props {
   renders?: Render[];
+  heading: Heading;
 }
-const { renders = [] } = Astro.props;
+
+const { renders = [], heading } = Astro.props;
+const stats = heading.stats ?? [];
+
+// A stat that is nothing but digits counts up on scroll; anything else
+// (3D, LOD, …) is rendered as-is.
+const isCountable = (value: string) => /^\d+$/.test(value.trim());
 ---
 
 <section id="bim" class="py-24 md:py-36 relative overflow-hidden">
@@ -17,27 +42,43 @@ const { renders = [] } = Astro.props;
   <div class="max-w-7xl mx-auto px-6 lg:px-12 relative">
     <div class="grid lg:grid-cols-2 gap-16 items-center">
       <div class="reveal">
-        <p class="text-accent text-xs font-medium tracking-[0.3em] uppercase mb-4">Technologie</p>
-        <h2 class="font-serif text-4xl md:text-6xl font-bold leading-tight mb-6">
-          Pracujeme<br />v <span class="italic text-accent">BIMu</span>
-        </h2>
-        <p class="text-brand-300 text-lg font-light leading-relaxed mb-10 max-w-md">
-          Navrhujeme v BIMu. Díky tomu máme pod kontrolou každý detail – od prvního náčrtu po realizaci.
-        </p>
-        <div class="grid grid-cols-3 gap-8">
-          <div>
-            <div class="counter text-4xl font-serif font-bold text-accent" data-target="100">0</div>
-            <div class="text-[11px] tracking-[0.2em] uppercase text-brand-500 mt-2">% digitální</div>
-          </div>
-          <div>
-            <div class="text-4xl font-serif font-bold text-accent">3D</div>
-            <div class="text-[11px] tracking-[0.2em] uppercase text-brand-500 mt-2">Koordinace</div>
-          </div>
-          <div>
-            <div class="text-4xl font-serif font-bold text-accent">LOD</div>
-            <div class="text-[11px] tracking-[0.2em] uppercase text-brand-500 mt-2">Detailní model</div>
-          </div>
-        </div>
+        <SectionTitle
+          eyebrow={heading.eyebrow}
+          plain={heading.titlePlain}
+          accent={heading.titleAccent}
+          layout={heading.titleLayout}
+          headingClass="font-serif text-4xl md:text-6xl font-bold leading-tight mb-6"
+        />
+        {
+          heading.description && (
+            <p class="text-brand-300 text-lg font-light leading-relaxed mb-10 max-w-md">{heading.description}</p>
+          )
+        }
+        {
+          stats.length > 0 && (
+            <div class="grid grid-cols-3 gap-8">
+              {stats.map((stat) => (
+                <div>
+                  {isCountable(stat.value) ? (
+                    <div
+                      class="counter text-4xl font-serif font-bold text-accent"
+                      data-target={stat.value.trim()}
+                      data-suffix={stat.suffix ?? ''}
+                    >
+                      0{stat.suffix}
+                    </div>
+                  ) : (
+                    <div class="text-4xl font-serif font-bold text-accent">
+                      {stat.value}
+                      {stat.suffix}
+                    </div>
+                  )}
+                  <div class="text-[11px] tracking-[0.2em] uppercase text-brand-500 mt-2">{stat.label}</div>
+                </div>
+              ))}
+            </div>
+          )
+        }
       </div>
 
       <div class="reveal reveal-delay-2">
@@ -65,13 +106,13 @@ const { renders = [] } = Astro.props;
 
               <div class="bim-dots" id="bimDots">
                 {renders.map((_, i) => (
-                  <span class="bim-dot" data-index={i}></span>
+                  <span class="bim-dot" data-index={i} />
                 ))}
               </div>
             </div>
           ) : (
             <div class="bg-brand-900/50 border border-brand-800/50 rounded-3xl aspect-[4/3] flex items-center justify-center relative overflow-hidden group">
-              <div class="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent"></div>
+              <div class="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent" />
               <div class="relative text-center p-12">
                 <div class="w-20 h-20 mx-auto rounded-full border border-accent/20 flex items-center justify-center mb-6">
                   <svg class="w-8 h-8 text-accent/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">

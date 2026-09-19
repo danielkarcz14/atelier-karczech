@@ -3,13 +3,24 @@ interface Props {
   titlePlain: string;
   titleAccent: string;
   subtitle: string;
-  image?: string;
+  image: string;
+  imageAlt: string;
+  primaryCtaLabel: string;
+  primaryCtaHref: string;
+  secondaryCtaLabel: string;
+  secondaryCtaHref: string;
 }
+
 const {
   titlePlain,
   titleAccent,
   subtitle,
-  image = '/images/exterior-dark-full.webp',
+  image,
+  imageAlt,
+  primaryCtaLabel,
+  primaryCtaHref,
+  secondaryCtaLabel,
+  secondaryCtaHref,
 } = Astro.props;
 ---
 
@@ -17,7 +28,7 @@ const {
   <div class="absolute inset-0">
     <img
       src={image}
-      alt="Atelier Karczech – exteriér"
+      alt={imageAlt}
       class="parallax-hero w-full h-[120%] object-cover object-center"
       id="heroImg"
       fetchpriority="high"
@@ -36,12 +47,26 @@ const {
         {subtitle}
       </p>
       <div class="hero-cta flex flex-col sm:flex-row gap-4 mt-10">
-        <a href="#kontakt" class="btn-primary bg-accent text-brand-950 px-8 py-4 rounded-full font-semibold text-center text-sm tracking-wide uppercase hover:text-brand-950 transition-colors">
-          Domluvit konzultaci
-        </a>
-        <a href="#portfolio" class="btn-outline text-white px-8 py-4 rounded-full font-medium text-center text-sm tracking-wide uppercase hover:text-accent transition-colors">
-          Portfolio
-        </a>
+        {
+          primaryCtaLabel && (
+            <a
+              href={primaryCtaHref}
+              class="btn-primary bg-accent text-brand-950 px-8 py-4 rounded-full font-semibold text-center text-sm tracking-wide uppercase hover:text-brand-950 transition-colors"
+            >
+              {primaryCtaLabel}
+            </a>
+          )
+        }
+        {
+          secondaryCtaLabel && (
+            <a
+              href={secondaryCtaHref}
+              class="btn-outline text-white px-8 py-4 rounded-full font-medium text-center text-sm tracking-wide uppercase hover:text-accent transition-colors"
+            >
+              {secondaryCtaLabel}
+            </a>
+          )
+        }
       </div>
     </div>
   </div>

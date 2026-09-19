@@ -1,15 +1,26 @@
 ---
 import { Image } from 'astro:assets';
+import SectionTitle from './SectionTitle.astro';
 
 interface Member {
   name: string;
   role: string;
   photo?: ImageMetadata | null;
 }
+
+interface Heading {
+  eyebrow?: string;
+  titlePlain?: string;
+  titleAccent?: string;
+  titleLayout?: string;
+}
+
 interface Props {
   members: Member[];
+  heading: Heading;
 }
-const { members } = Astro.props;
+
+const { members, heading } = Astro.props;
 
 function initials(name: string) {
   return name
@@ -26,8 +37,13 @@ function initials(name: string) {
 <section id="tym" class="py-24 md:py-36">
   <div class="max-w-7xl mx-auto px-6 lg:px-12">
     <div class="text-center mb-20 reveal">
-      <p class="text-accent text-xs font-medium tracking-[0.3em] uppercase mb-4">Kdo za tím stojí</p>
-      <h2 class="font-serif text-4xl md:text-6xl font-bold">Náš <span class="italic text-accent">tým</span></h2>
+      <SectionTitle
+        eyebrow={heading.eyebrow}
+        plain={heading.titlePlain}
+        accent={heading.titleAccent}
+        layout={heading.titleLayout}
+        headingClass="font-serif text-4xl md:text-6xl font-bold"
+      />
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 max-w-5xl mx-auto" id="teamGrid">

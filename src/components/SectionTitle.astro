@@ -1,0 +1,40 @@
+---
+// Shared heading for every section: an optional uppercase eyebrow, a plain part
+// (newlines in the CMS become line breaks) and an italic accent part that sits
+// either on the same line or on its own, depending on the CMS setting.
+interface Props {
+  eyebrow?: string;
+  plain?: string;
+  accent?: string;
+  layout?: string;
+  headingClass?: string;
+  eyebrowClass?: string;
+}
+
+const {
+  eyebrow = '',
+  plain = '',
+  accent = '',
+  layout = 'inline',
+  headingClass = 'font-serif text-4xl md:text-6xl font-bold leading-tight',
+  eyebrowClass = 'text-accent text-xs font-medium tracking-[0.3em] uppercase mb-4',
+} = Astro.props;
+
+const lines = plain.split('\n').filter((line, i, all) => line !== '' || i < all.length - 1);
+const breakBeforeAccent = layout === 'newline' && plain !== '';
+---
+
+{eyebrow && <p class={eyebrowClass}>{eyebrow}</p>}
+
+<h2 class={headingClass}>
+  {
+    lines.map((line, i) => (
+      <>
+        {i > 0 && <br />}
+        {line}
+      </>
+    ))
+  }{breakBeforeAccent && <br />}{accent && !breakBeforeAccent && plain !== '' && ' '}{
+    accent && <span class="italic text-accent">{accent}</span>
+  }
+</h2>

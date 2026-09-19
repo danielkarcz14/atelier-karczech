@@ -18,26 +18,29 @@ import Lightbox from '../components/Lightbox.astro';
 
 const reader = createReader(process.cwd(), keystaticConfig);
 
-const settings = await reader.singletons.settings.read();
+const [settings, heroContent, sections, contact] = await Promise.all([
+  reader.singletons.settings.read(),
+  reader.singletons.hero.read(),
+  reader.singletons.sections.read(),
+  reader.singletons.contact.read(),
+]);
 
 const byOrder = (a: { entry: { order: number } }, b: { entry: { order: number } }) =>
   a.entry.order - b.entry.order;
 
-// Keystatic stores only the filename for image fields, so prepend the public path.
-const img = (file: string | null, base = '/images/') => (file ? `${base}${file}` : '');
+// Keystatic stores image fields with their public path already applied
+// (/images/<slug>/<file>), so the value can be used as a URL directly.
+const url = (value: string | null | undefined) => value ?? '';
 
 // Team photos live in src/assets/team so Astro's build pipeline can compress
-// and generate responsive variants. Keystatic stores only the filename, so we
-// import every file at build time and look it up by basename.
+// and generate responsive variants, which means they must be imported at build
+// time. Keystatic stores the same path the glob produces, so look it up by key.
 const teamPhotoModules = import.meta.glob<{ default: ImageMetadata }>(
-  '/src/assets/team/*.{webp,jpg,jpeg,png,avif}',
+  '/src/assets/team/**/*.{webp,jpg,jpeg,png,avif}',
   { eager: true },
 );
 const teamPhotos = new Map<string, ImageMetadata>(
-  Object.entries(teamPhotoModules).map(([path, mod]) => [
-    path.split('/').pop() ?? '',
-    mod.default,
-  ]),
+  Object.entries(teamPhotoModules).map(([path, mod]) => [path, mod.default]),
 );
 
 const portfolioItems = (await reader.collections.portfolio.all())
@@ -45,8 +48,10 @@ const portfolioItems = (await reader.collections.portfolio.all())
   .map(({ entry }) => ({
     title: entry.title,
     category: entry.category,
-    image: img(entry.image),
-    imageFull: img(entry.imageFull),
+    image: url(entry.image),
+    // Falling back to the card image keeps the lightbox working even when no
+    // large version was uploaded.
+    imageFull: url(entry.imageFull) || url(entry.image),
     alt: entry.alt,
   }));
 
@@ -55,7 +60,7 @@ const teamMembers = (await reader.collections.team.all())
   .map(({ entry }) => ({
     name: entry.name,
     role: entry.role,
-    photo: entry.photo ? teamPhotos.get(entry.photo) ?? null : null,
+    photo: entry.photo ? (teamPhotos.get(entry.photo) ?? null) : null,
   }));
 
 const processSteps = (await reader.collections.process.all())
@@ -70,53 +75,115 @@ const bimRenders = (await reader.collections.bim.all())
   .sort(byOrder)
   .map(({ entry }) => ({
     title: entry.title,
-    image: img(entry.image),
-    imageFull: img(entry.imageFull),
+    image: url(entry.image),
+    imageFull: url(entry.imageFull) || url(entry.image),
     alt: entry.alt,
   }));
 
-// Fallbacks in case the settings singleton is missing.
-const heroTitlePlain = settings?.heroTitlePlain ?? 'Navrhujeme prostory,';
-const heroTitleAccent = settings?.heroTitleAccent ?? 've kterých chcete žít.';
-const heroSubtitle =
-  settings?.heroSubtitle ??
-  'Od prvního setkání až po realizaci. Každý projekt řešíme s důrazem na detail, funkci a vaši spokojenost.';
-const contactPerson = settings?.contactPerson ?? 'Bc. Filip Karcz';
-const contactPhone = settings?.contactPhone ?? '732 993 086';
-const contactPhoneHref = settings?.contactPhoneHref ?? '+420732993086';
-const contactEmail = settings?.contactEmail ?? 'karcz@atelierkarczech.cz';
-const favicon = settings?.favicon ? img(settings.favicon) : '/favicon.svg';
+// Fallbacks in case a settings singleton is missing or a field was cleared.
+const logoPlain = settings?.logoPlain || 'Ateliér';
+const logoAccent = settings?.logoAccent || 'Karczech';
+const siteTitle = settings?.siteTitle || 'Ateliér Karczech | Architektura & Projekce';
+const siteDescription =
+  settings?.siteDescription ||
+  'Ateliér Karczech – architektonický ateliér. Navrhujeme v BIMu, od prvního náčrtu po realizaci.';
+const favicon = url(settings?.favicon) || '/favicon.svg';
+const ogImage = url(settings?.ogImage);
+const navCtaLabel = settings?.navCtaLabel || 'Domluvit konzultaci';
+const navCtaHref = settings?.navCtaHref || '#kontakt';
+const footerCopyright = settings?.footerCopyright || 'Ateliér Karczech';
+
+const navLinks = (settings?.navLinks ?? []).map((link) => ({
+  label: link.label,
+  href: link.href,
+}));
+const footerLinks = [...navLinks, { label: 'Kontakt', href: navCtaHref }];
+
+const contactPerson = contact?.person ?? '';
+const contactPhone = contact?.phone ?? '';
+const contactPhoneHref = contact?.phoneHref ?? '';
+const contactEmail = contact?.email ?? '';
+
+const heroMarquee = (heroContent?.marquee ?? []).filter(Boolean);
 ---
 
-<Layout favicon={favicon}>
+<Layout title={siteTitle} description={siteDescription} favicon={favicon} ogImage={ogImage}>
   <Cursor />
-  <Navbar phone={contactPhone} phoneHref={contactPhoneHref} email={contactEmail} />
-
-  <Hero titlePlain={heroTitlePlain} titleAccent={heroTitleAccent} subtitle={heroSubtitle} />
-
-  <Marquee />
-
-  <Portfolio items={portfolioItems} />
-  <div class="section-divider max-w-7xl mx-auto"></div>
-
-  <Process steps={processSteps} />
-  <div class="section-divider max-w-7xl mx-auto"></div>
-
-  <Bim renders={bimRenders} />
-  <div class="section-divider max-w-7xl mx-auto"></div>
-
-  <Team members={teamMembers} />
-
-  <CtaBanner />
-
-  <Contact
-    contactPerson={contactPerson}
+  <Navbar
+    logoPlain={logoPlain}
+    logoAccent={logoAccent}
+    links={navLinks}
+    ctaLabel={navCtaLabel}
+    ctaHref={navCtaHref}
     phone={contactPhone}
     phoneHref={contactPhoneHref}
     email={contactEmail}
   />
 
-  <Footer />
+  <Hero
+    titlePlain={heroContent?.titlePlain ?? ''}
+    titleAccent={heroContent?.titleAccent ?? ''}
+    subtitle={heroContent?.subtitle ?? ''}
+    image={url(heroContent?.image) || '/images/hero.webp'}
+    imageAlt={heroContent?.imageAlt || 'Ateliér Karczech'}
+    primaryCtaLabel={heroContent?.primaryCtaLabel ?? ''}
+    primaryCtaHref={heroContent?.primaryCtaHref || '#kontakt'}
+    secondaryCtaLabel={heroContent?.secondaryCtaLabel ?? ''}
+    secondaryCtaHref={heroContent?.secondaryCtaHref || '#portfolio'}
+  />
+
+  <Marquee items={heroMarquee} />
+
+  <Portfolio items={portfolioItems} heading={sections?.portfolio ?? {}} />
+  <div class="section-divider max-w-7xl mx-auto"></div>
+
+  <Process steps={processSteps} heading={sections?.process ?? {}} />
+  <div class="section-divider max-w-7xl mx-auto"></div>
+
+  <Bim
+    renders={bimRenders}
+    heading={{
+      ...(sections?.bim ?? {}),
+      stats: (sections?.bim?.stats ?? []).map((stat) => ({
+        value: stat.value,
+        suffix: stat.suffix,
+        label: stat.label,
+      })),
+    }}
+  />
+  <div class="section-divider max-w-7xl mx-auto"></div>
+
+  <Team members={teamMembers} heading={sections?.team ?? {}} />
+
+  <CtaBanner
+    titlePlain={sections?.cta?.titlePlain}
+    titleAccent={sections?.cta?.titleAccent}
+    titleLayout={sections?.cta?.titleLayout}
+    text={sections?.cta?.text}
+    buttonLabel={sections?.cta?.buttonLabel}
+    buttonHref={sections?.cta?.buttonHref}
+    image={url(sections?.cta?.image) || '/images/cta.webp'}
+  />
+
+  <Contact
+    heading={sections?.contact ?? {}}
+    contactPerson={contactPerson}
+    phone={contactPhone}
+    phoneHref={contactPhoneHref}
+    email={contactEmail}
+    addressLine1={contact?.addressLine1 ?? ''}
+    addressLine2={contact?.addressLine2 ?? ''}
+    showMap={contact?.showMap ?? true}
+    mapLat={contact?.mapLat ?? ''}
+    mapLon={contact?.mapLon ?? ''}
+  />
+
+  <Footer
+    logoPlain={logoPlain}
+    logoAccent={logoAccent}
+    links={footerLinks}
+    copyright={footerCopyright}
+  />
 
   <Lightbox />
 </Layout>

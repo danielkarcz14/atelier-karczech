@@ -1,4 +1,6 @@
 ---
+import SectionTitle from './SectionTitle.astro';
+
 interface Item {
   title: string;
   category: string;
@@ -6,20 +8,40 @@ interface Item {
   imageFull: string;
   alt?: string;
 }
+
+interface Heading {
+  eyebrow?: string;
+  titlePlain?: string;
+  titleAccent?: string;
+  titleLayout?: string;
+  description?: string;
+  dragHint?: string;
+}
+
 interface Props {
   items: Item[];
+  heading: Heading;
 }
-const { items } = Astro.props;
+
+const { items, heading } = Astro.props;
 ---
 
 <section id="portfolio" class="py-24 md:py-36">
   <div class="max-w-7xl mx-auto px-6 lg:px-12">
     <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16 reveal">
       <div>
-        <p class="text-accent text-xs font-medium tracking-[0.3em] uppercase mb-4">Vybrané projekty</p>
-        <h2 class="font-serif text-4xl md:text-6xl font-bold leading-tight">Naše <span class="italic text-accent">práce</span></h2>
+        <SectionTitle
+          eyebrow={heading.eyebrow}
+          plain={heading.titlePlain}
+          accent={heading.titleAccent}
+          layout={heading.titleLayout}
+        />
       </div>
-      <p class="text-brand-400 text-sm max-w-sm font-light leading-relaxed">Každý projekt je originální odpovědí na místo, kontext a přání klienta.</p>
+      {
+        heading.description && (
+          <p class="text-brand-400 text-sm max-w-sm font-light leading-relaxed">{heading.description}</p>
+        )
+      }
     </div>
   </div>
 
@@ -58,11 +80,15 @@ const { items } = Astro.props;
     </div>
   </div>
 
-  <div class="max-w-7xl mx-auto px-6 lg:px-12 mt-8 flex items-center gap-3">
-    <div class="h-px flex-1 bg-brand-800/50"></div>
-    <span class="text-[10px] tracking-[0.3em] uppercase text-brand-500">Táhněte pro další</span>
-    <svg class="w-4 h-4 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-    </svg>
-  </div>
+  {
+    heading.dragHint && (
+      <div class="max-w-7xl mx-auto px-6 lg:px-12 mt-8 flex items-center gap-3">
+        <div class="h-px flex-1 bg-brand-800/50" />
+        <span class="text-[10px] tracking-[0.3em] uppercase text-brand-500">{heading.dragHint}</span>
+        <svg class="w-4 h-4 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+        </svg>
+      </div>
+    )
+  }
 </section>

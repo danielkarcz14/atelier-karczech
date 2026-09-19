@@ -1,4 +1,17 @@
 ---
+interface NavLink {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  logoPlain: string;
+  logoAccent: string;
+  links: NavLink[];
+  copyright: string;
+}
+
+const { logoPlain, logoAccent, links, copyright } = Astro.props;
 const year = new Date().getFullYear();
 ---
 
@@ -6,17 +19,19 @@ const year = new Date().getFullYear();
   <div class="max-w-7xl mx-auto px-6 lg:px-12 py-12">
     <div class="flex flex-col md:flex-row items-center justify-between gap-8">
       <a href="#" class="font-serif text-xl font-bold text-white">
-        Atelier<span class="text-accent">Karczech</span>
+        {logoPlain}<span class="text-accent">{logoAccent}</span>
       </a>
       <div class="flex flex-wrap justify-center gap-8">
-        <a href="#portfolio" class="nav-link text-sm text-brand-500 hover:text-white transition-colors">Portfolio</a>
-        <a href="#proces" class="nav-link text-sm text-brand-500 hover:text-white transition-colors">Proces</a>
-        <a href="#bim" class="nav-link text-sm text-brand-500 hover:text-white transition-colors">BIM</a>
-        <a href="#tym" class="nav-link text-sm text-brand-500 hover:text-white transition-colors">Tým</a>
-        <a href="#kontakt" class="nav-link text-sm text-brand-500 hover:text-white transition-colors">Kontakt</a>
+        {
+          links.map((link) => (
+            <a href={link.href} class="nav-link text-sm text-brand-500 hover:text-white transition-colors">
+              {link.label}
+            </a>
+          ))
+        }
       </div>
       <div class="text-xs text-brand-600">
-        &copy; {year} Atelier Karczech
+        &copy; {year} {copyright}
       </div>
     </div>
   </div>

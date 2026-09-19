@@ -1,0 +1,59 @@
+portfolio:
+  eyebrow: Vybrané projekty
+  titlePlain: Naše
+  titleAccent: práce
+  titleLayout: inline
+  description: Každý projekt je originální odpovědí na místo, kontext a přání klienta.
+  dragHint: Táhněte pro další
+process:
+  eyebrow: Průvodce spoluprací
+  titlePlain: Jak to u nás
+  titleAccent: funguje
+  titleLayout: newline
+  description: >-
+    Od prvního setkání až po hotovou stavbu vás provedeme každým krokem.
+    Transparentně, profesionálně a vždy s ohledem na váš záměr.
+  ctaLabel: Začít spolupráci
+  ctaHref: '#kontakt'
+bim:
+  eyebrow: Technologie
+  titlePlain: |-
+    Pracujeme
+    v
+  titleAccent: BIMu
+  titleLayout: inline
+  description: >-
+    Navrhujeme v BIMu. Díky tomu máme pod kontrolou každý detail – od prvního
+    náčrtu po realizaci.
+  stats:
+    - value: '100'
+      suffix: '%'
+      label: digitální
+    - value: 3D
+      suffix: ''
+      label: Koordinace
+    - value: LOD
+      suffix: ''
+      label: Detailní model
+team:
+  eyebrow: Kdo za tím stojí
+  titlePlain: Náš
+  titleAccent: tým
+  titleLayout: inline
+cta:
+  titlePlain: Máte v hlavě
+  titleAccent: projekt?
+  titleLayout: newline
+  text: >-
+    Ozvěte se nám a nezávazně probereme vaše možnosti. První konzultace je
+    zdarma.
+  buttonLabel: Domluvit konzultaci zdarma
+  buttonHref: '#kontakt'
+  image: /images/cta.webp
+contact:
+  eyebrow: Kontakt
+  titlePlain: Pojďme to
+  titleAccent: probrat
+  titleLayout: newline
+  formTitle: Napište nám
+  submitLabel: Odeslat zprávu

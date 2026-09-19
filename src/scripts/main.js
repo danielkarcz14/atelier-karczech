@@ -139,6 +139,7 @@ function initCounters() {
         const target = parseInt(el.dataset.target);
         if (!target) return;
 
+        const suffix = el.dataset.suffix || '';
         let current = 0;
         const step = target / 40;
         const timer = setInterval(() => {
@@ -147,7 +148,7 @@ function initCounters() {
             current = target;
             clearInterval(timer);
           }
-          el.textContent = Math.round(current) + '%';
+          el.textContent = Math.round(current) + suffix;
         }, 30);
 
         observer.unobserve(el);

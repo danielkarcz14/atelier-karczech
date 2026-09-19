@@ -1,0 +1,18 @@
+titlePlain: Navrhujeme prostory,
+titleAccent: ve kterých chcete žít.
+subtitle: >-
+  Od prvního setkání až po realizaci. Každý projekt řešíme s důrazem na detail,
+  funkci a vaši spokojenost.
+image: /images/hero.webp
+imageAlt: Ateliér Karczech – exteriér
+primaryCtaLabel: Domluvit konzultaci
+primaryCtaHref: '#kontakt'
+secondaryCtaLabel: Portfolio
+secondaryCtaHref: '#portfolio'
+marquee:
+  - Architektura
+  - Interiérový design
+  - Projektová dokumentace
+  - BIM
+  - Inženýring
+  - Technický dozor

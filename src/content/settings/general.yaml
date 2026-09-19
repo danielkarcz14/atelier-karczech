@@ -1,9 +1,18 @@
-heroTitlePlain: Navrhujeme prostory,
-heroTitleAccent: ve kterých chcete žít.
-heroSubtitle: >-
-  Od prvního setkání až po realizaci. Každý projekt řešíme s důrazem na detail,
-  funkci a vaši spokojenost.
-contactPerson: Bc. Filip Karcz
-contactPhone: 732 993 086
-contactPhoneHref: '+420732993086'
-contactEmail: karcz@atelierkarczech.cz
+logoPlain: Ateliér
+logoAccent: Karczech
+siteTitle: Ateliér Karczech | Architektura & Projekce
+siteDescription: >-
+  Ateliér Karczech – architektonický ateliér. Navrhujeme v BIMu, od prvního
+  náčrtu po realizaci.
+navLinks:
+  - label: Portfolio
+    href: '#portfolio'
+  - label: Proces
+    href: '#proces'
+  - label: BIM
+    href: '#bim'
+  - label: Tým
+    href: '#tym'
+navCtaLabel: Domluvit konzultaci
+navCtaHref: '#kontakt'
+footerCopyright: Ateliér Karczech
