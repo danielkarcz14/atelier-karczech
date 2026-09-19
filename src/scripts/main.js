@@ -1,5 +1,4 @@
 function init() {
-  initCursor();
   initNavbar();
   initMobileMenu();
   initLightbox();
@@ -10,33 +9,6 @@ function init() {
   initBimSlider();
   initStepStagger();
   initContactForm();
-}
-
-function initCursor() {
-  const dot = document.getElementById('cursorDot');
-  const ring = document.getElementById('cursorRing');
-  if (!window.matchMedia('(pointer: fine)').matches || !dot || !ring) return;
-
-  let mx = 0, my = 0, dx = 0, dy = 0;
-
-  document.addEventListener('mousemove', (e) => {
-    mx = e.clientX;
-    my = e.clientY;
-  });
-
-  (function loop() {
-    dx += (mx - dx) * 0.15;
-    dy += (my - dy) * 0.15;
-    dot.style.transform = `translate(${mx - 4}px, ${my - 4}px)`;
-    ring.style.left = dx + 'px';
-    ring.style.top = dy + 'px';
-    requestAnimationFrame(loop);
-  })();
-
-  document.querySelectorAll('a, button, .portfolio-card, .team-card').forEach((el) => {
-    el.addEventListener('mouseenter', () => ring.classList.add('hovering'));
-    el.addEventListener('mouseleave', () => ring.classList.remove('hovering'));
-  });
 }
 
 function initNavbar() {

@@ -15,10 +15,9 @@ interface Stat {
 }
 
 interface Heading {
+  index?: string;
   eyebrow?: string;
-  titlePlain?: string;
-  titleAccent?: string;
-  titleLayout?: string;
+  title?: string;
   description?: string;
   stats?: Stat[];
 }
@@ -36,55 +35,50 @@ const stats = heading.stats ?? [];
 const isCountable = (value: string) => /^\d+$/.test(value.trim());
 ---
 
-<section id="bim" class="py-24 md:py-36 relative overflow-hidden">
-  <div class="absolute top-0 right-0 w-1/2 h-full bg-accent/[0.03] rounded-l-[4rem] hidden lg:block"></div>
-
-  <div class="max-w-7xl mx-auto px-6 lg:px-12 relative">
-    <div class="grid lg:grid-cols-2 gap-16 items-center">
-      <div class="reveal">
-        <SectionTitle
-          eyebrow={heading.eyebrow}
-          plain={heading.titlePlain}
-          accent={heading.titleAccent}
-          layout={heading.titleLayout}
-          headingClass="font-serif text-4xl md:text-6xl font-bold leading-tight mb-6"
-        />
+<section id="bim" class="py-24 md:py-36">
+  <div class="max-w-7xl mx-auto px-6 lg:px-12">
+    <div class="grid lg:grid-cols-2 gap-16 lg:gap-24 items-start">
+      <div class="reveal lg:sticky lg:top-32">
+        <SectionTitle index={heading.index} eyebrow={heading.eyebrow} title={heading.title} />
         {
           heading.description && (
-            <p class="text-brand-300 text-lg font-light leading-relaxed mb-10 max-w-md">{heading.description}</p>
+            <p class="text-brand-300 text-lg font-light leading-relaxed max-w-md mt-8">{heading.description}</p>
           )
         }
         {
           stats.length > 0 && (
-            <div class="grid grid-cols-3 gap-8">
+            <dl class="grid grid-cols-3 gap-6 mt-12 border-t border-brand-800/40 pt-8">
               {stats.map((stat) => (
                 <div>
-                  {isCountable(stat.value) ? (
-                    <div
-                      class="counter text-4xl font-serif font-bold text-accent"
-                      data-target={stat.value.trim()}
-                      data-suffix={stat.suffix ?? ''}
-                    >
-                      0{stat.suffix}
-                    </div>
-                  ) : (
-                    <div class="text-4xl font-serif font-bold text-accent">
-                      {stat.value}
-                      {stat.suffix}
-                    </div>
-                  )}
-                  <div class="text-[11px] tracking-[0.2em] uppercase text-brand-500 mt-2">{stat.label}</div>
+                  <dt class="sr-only">{stat.label}</dt>
+                  <dd>
+                    {isCountable(stat.value) ? (
+                      <div
+                        class="counter font-serif text-3xl md:text-4xl font-semibold text-accent tabular-nums"
+                        data-target={stat.value.trim()}
+                        data-suffix={stat.suffix ?? ''}
+                      >
+                        0{stat.suffix}
+                      </div>
+                    ) : (
+                      <div class="font-serif text-3xl md:text-4xl font-semibold text-accent">
+                        {stat.value}
+                        {stat.suffix}
+                      </div>
+                    )}
+                    <div class="text-xs text-brand-500 mt-2 leading-snug">{stat.label}</div>
+                  </dd>
                 </div>
               ))}
-            </div>
+            </dl>
           )
         }
       </div>
 
-      <div class="reveal reveal-delay-2">
+      <div class="reveal reveal-delay-1">
         {
           renders.length > 0 ? (
-            <div class="bim-slider rounded-3xl overflow-hidden border border-brand-800/50 aspect-[4/3]" id="bimSlider">
+            <div class="bim-slider overflow-hidden rounded-[2px] aspect-[4/3]" id="bimSlider">
               <div class="bim-track" id="bimTrack">
                 {renders.map((r) => (
                   <button type="button" class="bim-slide" data-full={r.imageFull} aria-label="Zvětšit vizualizaci">
@@ -111,14 +105,8 @@ const isCountable = (value: string) => /^\d+$/.test(value.trim());
               </div>
             </div>
           ) : (
-            <div class="bg-brand-900/50 border border-brand-800/50 rounded-3xl aspect-[4/3] flex items-center justify-center relative overflow-hidden group">
-              <div class="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent" />
-              <div class="relative text-center p-12">
-                <div class="w-20 h-20 mx-auto rounded-full border border-accent/20 flex items-center justify-center mb-6">
-                  <svg class="w-8 h-8 text-accent/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
-                  </svg>
-                </div>
+            <div class="border border-brand-800/50 rounded-[2px] aspect-[4/3] flex items-center justify-center">
+              <div class="text-center p-12">
                 <p class="text-brand-400 font-serif text-lg">BIM vizualizace</p>
                 <p class="text-brand-600 text-sm mt-2 font-light">Brzy doplníme</p>
               </div>

@@ -3,7 +3,6 @@ import { createReader } from '@keystatic/core/reader';
 import keystaticConfig from '../../keystatic.config';
 
 import Layout from '../layouts/Layout.astro';
-import Cursor from '../components/Cursor.astro';
 import Navbar from '../components/Navbar.astro';
 import Hero from '../components/Hero.astro';
 import Marquee from '../components/Marquee.astro';
@@ -108,7 +107,6 @@ const heroMarquee = (heroContent?.marquee ?? []).filter(Boolean);
 ---
 
 <Layout title={siteTitle} description={siteDescription} favicon={favicon} ogImage={ogImage}>
-  <Cursor />
   <Navbar
     logoPlain={logoPlain}
     logoAccent={logoAccent}
@@ -135,15 +133,16 @@ const heroMarquee = (heroContent?.marquee ?? []).filter(Boolean);
   <Marquee items={heroMarquee} />
 
   <Portfolio items={portfolioItems} heading={sections?.portfolio ?? {}} />
-  <div class="section-divider max-w-7xl mx-auto"></div>
 
   <Process steps={processSteps} heading={sections?.process ?? {}} />
-  <div class="section-divider max-w-7xl mx-auto"></div>
 
   <Bim
     renders={bimRenders}
     heading={{
-      ...(sections?.bim ?? {}),
+      index: sections?.bim?.index,
+      eyebrow: sections?.bim?.eyebrow,
+      title: sections?.bim?.title,
+      description: sections?.bim?.description,
       stats: (sections?.bim?.stats ?? []).map((stat) => ({
         value: stat.value,
         suffix: stat.suffix,
@@ -151,14 +150,11 @@ const heroMarquee = (heroContent?.marquee ?? []).filter(Boolean);
       })),
     }}
   />
-  <div class="section-divider max-w-7xl mx-auto"></div>
 
   <Team members={teamMembers} heading={sections?.team ?? {}} />
 
   <CtaBanner
-    titlePlain={sections?.cta?.titlePlain}
-    titleAccent={sections?.cta?.titleAccent}
-    titleLayout={sections?.cta?.titleLayout}
+    title={sections?.cta?.title}
     text={sections?.cta?.text}
     buttonLabel={sections?.cta?.buttonLabel}
     buttonHref={sections?.cta?.buttonHref}

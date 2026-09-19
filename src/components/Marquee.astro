@@ -10,12 +10,12 @@ const loop = [...items, ...items];
 
 {
   items.length > 0 && (
-    <div class="py-6 border-y border-brand-800/30 overflow-hidden">
+    <div class="py-5 border-y border-brand-800/30 overflow-hidden">
       <div class="marquee-track flex whitespace-nowrap">
         {loop.map((item) => (
           <>
-            <span class="text-sm tracking-[0.2em] uppercase text-brand-600 mx-8">{item}</span>
-            <span class="text-accent mx-4">&mdash;</span>
+            <span class="text-xs tracking-[0.18em] uppercase text-brand-600 mx-7">{item}</span>
+            <span class="w-1 h-1 rounded-full bg-brand-700 self-center flex-shrink-0" aria-hidden="true" />
           </>
         ))}
       </div>

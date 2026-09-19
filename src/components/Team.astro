@@ -9,10 +9,9 @@ interface Member {
 }
 
 interface Heading {
+  index?: string;
   eyebrow?: string;
-  titlePlain?: string;
-  titleAccent?: string;
-  titleLayout?: string;
+  title?: string;
 }
 
 interface Props {
@@ -36,27 +35,21 @@ function initials(name: string) {
 
 <section id="tym" class="py-24 md:py-36">
   <div class="max-w-7xl mx-auto px-6 lg:px-12">
-    <div class="text-center mb-20 reveal">
-      <SectionTitle
-        eyebrow={heading.eyebrow}
-        plain={heading.titlePlain}
-        accent={heading.titleAccent}
-        layout={heading.titleLayout}
-        headingClass="font-serif text-4xl md:text-6xl font-bold"
-      />
+    <div class="reveal mb-16">
+      <SectionTitle index={heading.index} eyebrow={heading.eyebrow} title={heading.title} />
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 max-w-5xl mx-auto" id="teamGrid">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-14" id="teamGrid">
       {
         members.map((m) => (
           <div class="team-card reveal">
-            <div class="aspect-[3/4] rounded-3xl overflow-hidden bg-brand-900 mb-6 relative">
+            <div class="aspect-[3/4] overflow-hidden bg-brand-900 rounded-[2px] relative">
               {m.photo ? (
                 <Image
                   src={m.photo}
                   alt={m.name}
                   widths={[400, 600, 900]}
-                  sizes="(min-width: 1024px) 300px, (min-width: 640px) 45vw, 90vw"
+                  sizes="(min-width: 1024px) 380px, (min-width: 640px) 45vw, 90vw"
                   class="team-img w-full h-full object-cover"
                   loading="lazy"
                   decoding="async"
@@ -67,8 +60,10 @@ function initials(name: string) {
                 </div>
               )}
             </div>
-            <h3 class="font-serif text-xl font-bold">{m.name}</h3>
-            <p class="text-brand-400 text-sm mt-1 font-light">{m.role}</p>
+            <div class="border-t border-brand-800/40 mt-5 pt-4">
+              <h3 class="font-serif text-xl font-semibold tracking-tight">{m.name}</h3>
+              <p class="text-brand-500 text-sm mt-1 font-light">{m.role}</p>
+            </div>
           </div>
         ))
       }

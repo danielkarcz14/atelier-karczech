@@ -26,21 +26,6 @@ const siteImage = (label: string, description?: string) =>
     publicPath: '/images/',
   });
 
-// Every section headline is plain text plus an italic accent part in the brand
-// colour; this picker decides whether the accent sits on the same line.
-const titleLayoutOptions = [
-  { label: 'Na stejném řádku', value: 'inline' },
-  { label: 'Na novém řádku', value: 'newline' },
-];
-
-const titleLayout = (defaultValue: string) =>
-  fields.select({
-    label: 'Zalomení nadpisu',
-    description: 'Kde se má zobrazit zvýrazněná část nadpisu.',
-    options: titleLayoutOptions,
-    defaultValue,
-  });
-
 export default config({
   storage: {
     kind: 'github',
@@ -218,19 +203,24 @@ export default config({
       schema: {
         portfolio: fields.object(
           {
-            eyebrow: fields.text({ label: 'Nadtitulek', defaultValue: 'Vybrané projekty' }),
-            titlePlain: fields.text({
-              label: 'Nadpis – běžná část',
+            index: fields.text({
+              label: 'Číslo sekce',
+              description: 'Malé číslo vlevo nad nadpisem. Prázdné = nezobrazí se.',
+              defaultValue: '01',
+            }),
+            eyebrow: fields.text({
+              label: 'Popisek sekce',
+              description: 'Krátké slovo vedle čísla. Prázdné = nezobrazí se.',
+              defaultValue: 'Portfolio',
+            }),
+            title: fields.text({
+              label: 'Nadpis',
+              description: 'Enterem lze nadpis zalomit na víc řádků.',
               multiline: true,
-              defaultValue: 'Naše',
+              defaultValue: 'Vybrané projekty',
             }),
-            titleAccent: fields.text({
-              label: 'Nadpis – zvýrazněná část',
-              defaultValue: 'práce',
-            }),
-            titleLayout: titleLayout('inline'),
             description: fields.text({
-              label: 'Popisek vpravo od nadpisu',
+              label: 'Popisek',
               multiline: true,
               defaultValue:
                 'Každý projekt je originální odpovědí na místo, kontext a přání klienta.',
@@ -245,19 +235,24 @@ export default config({
 
         process: fields.object(
           {
-            eyebrow: fields.text({ label: 'Nadtitulek', defaultValue: 'Průvodce spoluprací' }),
-            titlePlain: fields.text({
-              label: 'Nadpis – běžná část',
+            index: fields.text({
+              label: 'Číslo sekce',
+              description: 'Malé číslo vlevo nad nadpisem. Prázdné = nezobrazí se.',
+              defaultValue: '02',
+            }),
+            eyebrow: fields.text({
+              label: 'Popisek sekce',
+              description: 'Krátké slovo vedle čísla. Prázdné = nezobrazí se.',
+              defaultValue: 'Proces',
+            }),
+            title: fields.text({
+              label: 'Nadpis',
+              description: 'Enterem lze nadpis zalomit na víc řádků.',
               multiline: true,
-              defaultValue: 'Jak to u nás',
+              defaultValue: 'Jak to u nás funguje',
             }),
-            titleAccent: fields.text({
-              label: 'Nadpis – zvýrazněná část',
-              defaultValue: 'funguje',
-            }),
-            titleLayout: titleLayout('newline'),
             description: fields.text({
-              label: 'Popisek pod nadpisem',
+              label: 'Popisek',
               multiline: true,
               defaultValue:
                 'Od prvního setkání až po hotovou stavbu vás provedeme každým krokem. Transparentně, profesionálně a vždy s ohledem na váš záměr.',
@@ -270,16 +265,24 @@ export default config({
 
         bim: fields.object(
           {
-            eyebrow: fields.text({ label: 'Nadtitulek', defaultValue: 'Technologie' }),
-            titlePlain: fields.text({
-              label: 'Nadpis – běžná část',
-              multiline: true,
-              defaultValue: 'Pracujeme\nv',
+            index: fields.text({
+              label: 'Číslo sekce',
+              description: 'Malé číslo vlevo nad nadpisem. Prázdné = nezobrazí se.',
+              defaultValue: '03',
             }),
-            titleAccent: fields.text({ label: 'Nadpis – zvýrazněná část', defaultValue: 'BIMu' }),
-            titleLayout: titleLayout('inline'),
+            eyebrow: fields.text({
+              label: 'Popisek sekce',
+              description: 'Krátké slovo vedle čísla. Prázdné = nezobrazí se.',
+              defaultValue: 'Technologie',
+            }),
+            title: fields.text({
+              label: 'Nadpis',
+              description: 'Enterem lze nadpis zalomit na víc řádků.',
+              multiline: true,
+              defaultValue: 'Pracujeme v BIMu',
+            }),
             description: fields.text({
-              label: 'Popisek pod nadpisem',
+              label: 'Popisek',
               multiline: true,
               defaultValue:
                 'Navrhujeme v BIMu. Díky tomu máme pod kontrolou každý detail – od prvního náčrtu po realizaci.',
@@ -309,30 +312,44 @@ export default config({
 
         team: fields.object(
           {
-            eyebrow: fields.text({ label: 'Nadtitulek', defaultValue: 'Kdo za tím stojí' }),
-            titlePlain: fields.text({
-              label: 'Nadpis – běžná část',
-              multiline: true,
-              defaultValue: 'Náš',
+            index: fields.text({
+              label: 'Číslo sekce',
+              description: 'Malé číslo vlevo nad nadpisem. Prázdné = nezobrazí se.',
+              defaultValue: '04',
             }),
-            titleAccent: fields.text({ label: 'Nadpis – zvýrazněná část', defaultValue: 'tým' }),
-            titleLayout: titleLayout('inline'),
+            eyebrow: fields.text({
+              label: 'Popisek sekce',
+              description: 'Krátké slovo vedle čísla. Prázdné = nezobrazí se.',
+              defaultValue: 'Ateliér',
+            }),
+            title: fields.text({
+              label: 'Nadpis',
+              description: 'Enterem lze nadpis zalomit na víc řádků.',
+              multiline: true,
+              defaultValue: 'Kdo za tím stojí',
+            }),
           },
           { label: 'Tým' },
         ),
 
         cta: fields.object(
           {
-            titlePlain: fields.text({
-              label: 'Nadpis – běžná část',
+            index: fields.text({
+              label: 'Číslo sekce',
+              description: 'Malé číslo vlevo nad nadpisem. Prázdné = nezobrazí se.',
+              defaultValue: '',
+            }),
+            eyebrow: fields.text({
+              label: 'Popisek sekce',
+              description: 'Krátké slovo vedle čísla. Prázdné = nezobrazí se.',
+              defaultValue: '',
+            }),
+            title: fields.text({
+              label: 'Nadpis',
+              description: 'Enterem lze nadpis zalomit na víc řádků.',
               multiline: true,
-              defaultValue: 'Máte v hlavě',
+              defaultValue: 'Máte v hlavě projekt?',
             }),
-            titleAccent: fields.text({
-              label: 'Nadpis – zvýrazněná část',
-              defaultValue: 'projekt?',
-            }),
-            titleLayout: titleLayout('newline'),
             text: fields.text({
               label: 'Text pod nadpisem',
               multiline: true,
@@ -351,17 +368,22 @@ export default config({
 
         contact: fields.object(
           {
-            eyebrow: fields.text({ label: 'Nadtitulek', defaultValue: 'Kontakt' }),
-            titlePlain: fields.text({
-              label: 'Nadpis – běžná část',
+            index: fields.text({
+              label: 'Číslo sekce',
+              description: 'Malé číslo vlevo nad nadpisem. Prázdné = nezobrazí se.',
+              defaultValue: '05',
+            }),
+            eyebrow: fields.text({
+              label: 'Popisek sekce',
+              description: 'Krátké slovo vedle čísla. Prázdné = nezobrazí se.',
+              defaultValue: 'Kontakt',
+            }),
+            title: fields.text({
+              label: 'Nadpis',
+              description: 'Enterem lze nadpis zalomit na víc řádků.',
               multiline: true,
-              defaultValue: 'Pojďme to',
+              defaultValue: 'Pojďme to probrat',
             }),
-            titleAccent: fields.text({
-              label: 'Nadpis – zvýrazněná část',
-              defaultValue: 'probrat',
-            }),
-            titleLayout: titleLayout('newline'),
             formTitle: fields.text({ label: 'Nadpis formuláře', defaultValue: 'Napište nám' }),
             submitLabel: fields.text({
               label: 'Tlačítko formuláře',

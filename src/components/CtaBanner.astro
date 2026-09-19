@@ -2,48 +2,38 @@
 import SectionTitle from './SectionTitle.astro';
 
 interface Props {
-  titlePlain?: string;
-  titleAccent?: string;
-  titleLayout?: string;
+  title?: string;
   text?: string;
   buttonLabel?: string;
   buttonHref?: string;
   image?: string;
 }
 
-const {
-  titlePlain,
-  titleAccent,
-  titleLayout,
-  text,
-  buttonLabel,
-  buttonHref,
-  image = '/images/cta.webp',
-} = Astro.props;
+const { title, text, buttonLabel, buttonHref, image = '/images/cta.webp' } = Astro.props;
 ---
 
-<section class="py-24 md:py-36 relative overflow-hidden">
+<section class="relative overflow-hidden border-y border-brand-800/40">
   <div class="absolute inset-0">
-    {image && <img src={image} alt="" class="w-full h-full object-cover opacity-20" loading="lazy" decoding="async" />}
-    <div class="absolute inset-0 bg-gradient-to-r from-brand-950 via-brand-950/95 to-brand-950/80"></div>
+    {image && <img src={image} alt="" class="w-full h-full object-cover opacity-15" loading="lazy" decoding="async" />}
+    <div class="absolute inset-0 bg-gradient-to-r from-brand-950 via-brand-950/95 to-brand-950/75"></div>
   </div>
-  <div class="relative max-w-4xl mx-auto px-6 lg:px-12 text-center reveal">
-    <SectionTitle
-      plain={titlePlain}
-      accent={titleAccent}
-      layout={titleLayout}
-      headingClass="font-serif text-4xl md:text-6xl font-bold leading-tight mb-6"
-    />
-    {text && <p class="text-brand-300 text-lg font-light max-w-lg mx-auto mb-10">{text}</p>}
-    {
-      buttonLabel && (
-        <a
-          href={buttonHref}
-          class="btn-primary inline-block bg-accent text-brand-950 px-10 py-5 rounded-full font-semibold text-sm tracking-wide uppercase hover:text-brand-950 transition-colors"
-        >
-          {buttonLabel}
-        </a>
-      )
-    }
+
+  <div class="relative max-w-7xl mx-auto px-6 lg:px-12 py-24 md:py-32">
+    <div class="grid lg:grid-cols-[1fr_auto] gap-10 lg:gap-16 items-end reveal">
+      <div class="max-w-2xl">
+        <SectionTitle title={title} rule={false} />
+        {text && <p class="text-brand-300 text-lg font-light leading-relaxed mt-6 max-w-lg">{text}</p>}
+      </div>
+      {
+        buttonLabel && (
+          <a
+            href={buttonHref}
+            class="btn-primary inline-block flex-shrink-0 bg-accent text-brand-950 px-10 py-5 rounded-[2px] font-medium text-sm tracking-wide uppercase hover:text-brand-950 transition-colors"
+          >
+            {buttonLabel}
+          </a>
+        )
+      }
+    </div>
   </div>
 </section>
