@@ -152,6 +152,10 @@ export default config({
       path: 'src/content/settings/hero',
       format: { data: 'yaml' },
       schema: {
+        badge: fields.text({
+          label: 'Štítek nad nadpisem',
+          description: 'Krátký text v rámečku, např. „Ateliér v Českém Těšíně“. Prázdné = nezobrazí se.',
+        }),
         titlePlain: fields.text({
           label: 'Nadpis – běžná část',
           description: 'První, nebarevná část velkého nadpisu.',
@@ -159,7 +163,7 @@ export default config({
         }),
         titleAccent: fields.text({
           label: 'Nadpis – zvýrazněná část',
-          description: 'Část nadpisu kurzívou v akcentní barvě.',
+          description: 'Druhý řádek nadpisu v akcentní barvě.',
           multiline: true,
         }),
         subtitle: fields.text({ label: 'Podtitul', multiline: true }),
@@ -217,17 +221,18 @@ export default config({
               label: 'Nadpis',
               description: 'Enterem lze nadpis zalomit na víc řádků.',
               multiline: true,
-              defaultValue: 'Vybrané projekty',
+              defaultValue: 'Vybrané',
+            }),
+            titleAccent: fields.text({
+              label: 'Nadpis – zvýrazněná část',
+              description: 'Zobrazí se na novém řádku v akcentní barvě. Prázdné = nezobrazí se.',
+              defaultValue: 'projekty',
             }),
             description: fields.text({
               label: 'Popisek',
               multiline: true,
               defaultValue:
                 'Každý projekt je originální odpovědí na místo, kontext a přání klienta.',
-            }),
-            dragHint: fields.text({
-              label: 'Nápověda pod galerií',
-              defaultValue: 'Táhněte pro další',
             }),
           },
           { label: 'Portfolio' },
@@ -249,7 +254,12 @@ export default config({
               label: 'Nadpis',
               description: 'Enterem lze nadpis zalomit na víc řádků.',
               multiline: true,
-              defaultValue: 'Jak to u nás funguje',
+              defaultValue: 'Jak to u nás',
+            }),
+            titleAccent: fields.text({
+              label: 'Nadpis – zvýrazněná část',
+              description: 'Zobrazí se na novém řádku v akcentní barvě. Prázdné = nezobrazí se.',
+              defaultValue: 'funguje',
             }),
             description: fields.text({
               label: 'Popisek',
@@ -279,7 +289,12 @@ export default config({
               label: 'Nadpis',
               description: 'Enterem lze nadpis zalomit na víc řádků.',
               multiline: true,
-              defaultValue: 'Pracujeme v BIMu',
+              defaultValue: 'Pracujeme',
+            }),
+            titleAccent: fields.text({
+              label: 'Nadpis – zvýrazněná část',
+              description: 'Zobrazí se na novém řádku v akcentní barvě. Prázdné = nezobrazí se.',
+              defaultValue: 'v BIMu',
             }),
             description: fields.text({
               label: 'Popisek',
@@ -326,7 +341,12 @@ export default config({
               label: 'Nadpis',
               description: 'Enterem lze nadpis zalomit na víc řádků.',
               multiline: true,
-              defaultValue: 'Kdo za tím stojí',
+              defaultValue: 'Kdo za tím',
+            }),
+            titleAccent: fields.text({
+              label: 'Nadpis – zvýrazněná část',
+              description: 'Zobrazí se na novém řádku v akcentní barvě. Prázdné = nezobrazí se.',
+              defaultValue: 'stojí',
             }),
           },
           { label: 'Tým' },
@@ -348,7 +368,12 @@ export default config({
               label: 'Nadpis',
               description: 'Enterem lze nadpis zalomit na víc řádků.',
               multiline: true,
-              defaultValue: 'Máte v hlavě projekt?',
+              defaultValue: 'Máte v hlavě',
+            }),
+            titleAccent: fields.text({
+              label: 'Nadpis – zvýrazněná část',
+              description: 'Zobrazí se na novém řádku v akcentní barvě. Prázdné = nezobrazí se.',
+              defaultValue: 'projekt?',
             }),
             text: fields.text({
               label: 'Text pod nadpisem',
@@ -382,7 +407,12 @@ export default config({
               label: 'Nadpis',
               description: 'Enterem lze nadpis zalomit na víc řádků.',
               multiline: true,
-              defaultValue: 'Pojďme to probrat',
+              defaultValue: 'Pojďme to',
+            }),
+            titleAccent: fields.text({
+              label: 'Nadpis – zvýrazněná část',
+              description: 'Zobrazí se na novém řádku v akcentní barvě. Prázdné = nezobrazí se.',
+              defaultValue: 'probrat',
             }),
             formTitle: fields.text({ label: 'Nadpis formuláře', defaultValue: 'Napište nám' }),
             submitLabel: fields.text({

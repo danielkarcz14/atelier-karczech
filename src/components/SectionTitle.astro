@@ -1,37 +1,36 @@
 ---
-// Section header used across the page: a hairline rule, a quiet index/label
-// row beneath it, and the headline itself. Newlines in the CMS title become
-// line breaks. No italic accent here — that device is reserved for the hero.
+// Section header used across the page: a short accent rule with a small
+// index/label row, then the headline. The optional accent part drops to its
+// own line in the brand colour. Newlines in the CMS title become line breaks.
 interface Props {
   index?: string;
   eyebrow?: string;
   title?: string;
+  titleAccent?: string;
   meta?: string;
   headingClass?: string;
   align?: string;
-  rule?: boolean;
 }
 
 const {
   index = '',
   eyebrow = '',
   title = '',
+  titleAccent = '',
   meta = '',
   headingClass = 'section-title',
   align = 'left',
-  rule = true,
 } = Astro.props;
 
 const lines = title.split('\n').filter((line) => line !== '');
 const hasLabel = Boolean(index || eyebrow || meta);
 ---
 
-{rule && hasLabel && <div class="section-rule"></div>}
-
 {
   hasLabel && (
     <div class:list={['section-label', align === 'center' && 'section-label--center']}>
       <span class="section-label-left">
+        <span class="section-dash" aria-hidden="true" />
         {index && <span class="section-index">{index}</span>}
         {eyebrow}
       </span>
@@ -48,5 +47,5 @@ const hasLabel = Boolean(index || eyebrow || meta);
         {line}
       </>
     ))
-  }
+  }{titleAccent && <br />}{titleAccent && <span class="text-accent">{titleAccent}</span>}
 </h2>

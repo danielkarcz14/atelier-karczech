@@ -5,7 +5,6 @@ function init() {
   initParallax();
   initScrollReveal();
   initCounters();
-  initPortfolioDrag();
   initBimSlider();
   initStepStagger();
   initContactForm();
@@ -129,80 +128,6 @@ function initCounters() {
     { threshold: 0.5 }
   );
   document.querySelectorAll('.counter').forEach((el) => observer.observe(el));
-}
-
-function initPortfolioDrag() {
-  const track = document.getElementById('portfolioTrack');
-  if (!track) return;
-
-  const prevBtn = document.getElementById('portfolioPrev');
-  const nextBtn = document.getElementById('portfolioNext');
-
-  let isDown = false;
-  let startX = 0;
-  let startScroll = 0;
-  let moved = false;
-
-  function onPointerMove(e) {
-    if (!isDown) return;
-    const dx = e.clientX - startX;
-    if (!moved && Math.abs(dx) > 5) {
-      moved = true;
-      track.classList.add('is-dragging');
-    }
-    if (moved) track.scrollLeft = startScroll - dx;
-  }
-
-  function onPointerUp() {
-    if (!isDown) return;
-    isDown = false;
-    track.classList.remove('is-dragging');
-    window.removeEventListener('pointermove', onPointerMove);
-    window.removeEventListener('pointerup', onPointerUp);
-  }
-
-  track.addEventListener('pointerdown', (e) => {
-    if (e.pointerType !== 'mouse' || e.button !== 0) return;
-    isDown = true;
-    moved = false;
-    startX = e.clientX;
-    startScroll = track.scrollLeft;
-    window.addEventListener('pointermove', onPointerMove);
-    window.addEventListener('pointerup', onPointerUp);
-  });
-
-  // After an actual drag, suppress the click that follows (it would open the lightbox).
-  track.addEventListener(
-    'click',
-    (e) => {
-      if (moved) {
-        e.preventDefault();
-        e.stopPropagation();
-      }
-    },
-    true
-  );
-
-  function scrollByCard(dir) {
-    const card = track.querySelector('.portfolio-card');
-    const gap = parseFloat(getComputedStyle(track).columnGap) || 24;
-    const amount = card ? card.offsetWidth + gap : track.clientWidth * 0.8;
-    track.scrollBy({ left: dir * amount, behavior: 'smooth' });
-  }
-
-  prevBtn?.addEventListener('click', () => scrollByCard(-1));
-  nextBtn?.addEventListener('click', () => scrollByCard(1));
-
-  function updateArrows() {
-    const maxScroll = track.scrollWidth - track.clientWidth;
-    const x = track.scrollLeft;
-    prevBtn?.classList.toggle('is-hidden', x <= 1);
-    nextBtn?.classList.toggle('is-hidden', x >= maxScroll - 1);
-  }
-
-  track.addEventListener('scroll', updateArrows, { passive: true });
-  window.addEventListener('resize', updateArrows);
-  updateArrows();
 }
 
 function initBimSlider() {

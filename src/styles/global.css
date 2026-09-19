@@ -51,28 +51,6 @@
     U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
-@font-face {
-  font-family: "Playfair Display Variable";
-  font-style: italic;
-  font-display: swap;
-  font-weight: 400 900;
-  src: url("/fonts/playfair-display-latin-wght-italic.woff2") format("woff2-variations");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
-    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
-    U+FEFF, U+FFFD;
-}
-
-@font-face {
-  font-family: "Playfair Display Variable";
-  font-style: italic;
-  font-display: swap;
-  font-weight: 400 900;
-  src: url("/fonts/playfair-display-latin-ext-wght-italic.woff2") format("woff2-variations");
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304,
-    U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB,
-    U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-
 /* ============================================================
    THEME – colors and fonts (Tailwind v4 CSS-first config)
    ============================================================ */
@@ -109,23 +87,43 @@ html {
   color: #1c1714;
 }
 
+/* === PAGE SHELL ===
+   Every section shares this measure so the page reads as one column,
+   centred and stable from 1280px up to ultrawide. */
+.page-shell {
+  width: 100%;
+  max-width: 72rem;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+  .page-shell {
+    padding-inline: 2.5rem;
+  }
+}
+
 /* === SECTION HEADERS ===
    A hairline rule, a small index/label row and the headline. Deliberately
    quiet so the projects carry the page. */
-.section-rule {
-  height: 1px;
-  background: rgba(200, 169, 126, 0.18);
-}
-
 .section-label {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
   gap: 1.5rem;
-  padding-top: 0.875rem;
   font-size: 0.75rem;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   color: #8c7660;
+}
+
+.section-dash {
+  display: inline-block;
+  width: 1.75rem;
+  height: 1px;
+  background: #c8a97e;
+  vertical-align: middle;
+  margin-right: 0.875rem;
 }
 
 .section-label--center {
@@ -143,13 +141,94 @@ html {
 }
 
 .section-title {
-  margin-top: 1.5rem;
-  font-family: var(--font-serif);
-  font-weight: 600;
-  font-size: clamp(2.25rem, 5.5vw, 4.75rem);
-  line-height: 1.02;
-  letter-spacing: -0.025em;
-  text-wrap: balance;
+  margin-top: 1.25rem;
+  font-family: var(--font-sans);
+  font-weight: 800;
+  font-size: clamp(2rem, 4.5vw, 3.75rem);
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+}
+
+/* Small pill above the hero headline. */
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.9rem;
+  border: 1px solid rgba(200, 169, 126, 0.3);
+  border-radius: 999px;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  color: #d1c5b5;
+}
+
+.hero-badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #c8a97e;
+  flex-shrink: 0;
+}
+
+/* === PROCESS FLOW ===
+   Numbered steps sitting on a connecting rule, like a site plan legend. */
+.flow-step {
+  position: relative;
+  padding-top: 3.25rem;
+}
+
+/* The connector runs into the grid gap, so it has to stop at the end of
+   each row — which row that is depends on the column count. */
+.flow-step::before {
+  content: '';
+  position: absolute;
+  top: 1.125rem;
+  left: 2.75rem;
+  right: -2rem;
+  height: 1px;
+  background: rgba(200, 169, 126, 0.25);
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .flow-step::before {
+    display: block;
+  }
+
+  .flow-step:nth-child(2n)::before {
+    display: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .flow-step:nth-child(2n)::before {
+    display: block;
+  }
+
+  .flow-step:nth-child(3n)::before {
+    display: none;
+  }
+}
+
+.flow-step:last-child::before {
+  display: none;
+}
+
+.flow-number {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2.25rem;
+  height: 2.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(200, 169, 126, 0.4);
+  color: #c8a97e;
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  background: #1c1714;
 }
 
 /* === NAVIGATION === */
@@ -262,33 +341,6 @@ html {
   will-change: transform;
 }
 
-/* === PORTFOLIO === */
-.portfolio-wrapper {
-  position: relative;
-}
-
-.portfolio-track {
-  display: flex;
-  gap: 1.5rem;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  padding-block: 1rem;
-  /* Align the first card with the max-w-7xl container, keep the bleed right. */
-  padding-inline: max(1.5rem, calc((100% - 80rem) / 2 + 3rem));
-  cursor: grab;
-}
-
-/* While the user is dragging: free 1:1 movement, no text selection. */
-.portfolio-track.is-dragging {
-  cursor: grabbing;
-  user-select: none;
-}
-
-.portfolio-track:active {
-  cursor: grabbing;
-}
-
 /* === PORTFOLIO ARROWS === */
 .portfolio-arrow {
   position: absolute;
@@ -322,25 +374,12 @@ html {
 .portfolio-arrow.next { right: 1rem; }
 
 /* Hidden when the track reaches that end */
-.portfolio-arrow.is-hidden {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.portfolio-track::-webkit-scrollbar {
-  display: none;
-}
-
-.portfolio-card {
-  flex-shrink: 0;
-}
-
 .portfolio-card img {
-  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .portfolio-card:hover img {
-  transform: scale(1.05);
+  transform: scale(1.04);
 }
 
 /* === BIM SLIDER === */

@@ -119,6 +119,7 @@ const heroMarquee = (heroContent?.marquee ?? []).filter(Boolean);
   />
 
   <Hero
+    badge={heroContent?.badge ?? ''}
     titlePlain={heroContent?.titlePlain ?? ''}
     titleAccent={heroContent?.titleAccent ?? ''}
     subtitle={heroContent?.subtitle ?? ''}
@@ -142,6 +143,7 @@ const heroMarquee = (heroContent?.marquee ?? []).filter(Boolean);
       index: sections?.bim?.index,
       eyebrow: sections?.bim?.eyebrow,
       title: sections?.bim?.title,
+      titleAccent: sections?.bim?.titleAccent,
       description: sections?.bim?.description,
       stats: (sections?.bim?.stats ?? []).map((stat) => ({
         value: stat.value,
@@ -155,6 +157,7 @@ const heroMarquee = (heroContent?.marquee ?? []).filter(Boolean);
 
   <CtaBanner
     title={sections?.cta?.title}
+    titleAccent={sections?.cta?.titleAccent}
     text={sections?.cta?.text}
     buttonLabel={sections?.cta?.buttonLabel}
     buttonHref={sections?.cta?.buttonHref}

@@ -12,6 +12,7 @@ interface Heading {
   index?: string;
   eyebrow?: string;
   title?: string;
+  titleAccent?: string;
 }
 
 interface Props {
@@ -34,9 +35,9 @@ function initials(name: string) {
 ---
 
 <section id="tym" class="py-24 md:py-36">
-  <div class="max-w-7xl mx-auto px-6 lg:px-12">
+  <div class="page-shell">
     <div class="reveal mb-16">
-      <SectionTitle index={heading.index} eyebrow={heading.eyebrow} title={heading.title} />
+      <SectionTitle index={heading.index} eyebrow={heading.eyebrow} title={heading.title} titleAccent={heading.titleAccent} />
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-14" id="teamGrid">
@@ -55,13 +56,13 @@ function initials(name: string) {
                   decoding="async"
                 />
               ) : (
-                <div class="absolute inset-0 flex items-center justify-center text-accent text-6xl font-serif">
+                <div class="absolute inset-0 flex items-center justify-center text-accent text-5xl font-sans font-bold">
                   {initials(m.name)}
                 </div>
               )}
             </div>
             <div class="border-t border-brand-800/40 mt-5 pt-4">
-              <h3 class="font-serif text-xl font-semibold tracking-tight">{m.name}</h3>
+              <h3 class="font-sans text-lg font-bold tracking-tight">{m.name}</h3>
               <p class="text-brand-500 text-sm mt-1 font-light">{m.role}</p>
             </div>
           </div>

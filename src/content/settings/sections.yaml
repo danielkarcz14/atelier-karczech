@@ -1,13 +1,14 @@
 portfolio:
   index: '01'
   eyebrow: Portfolio
-  title: Vybrané projekty
+  title: Vybrané
+  titleAccent: projekty
   description: Každý projekt je originální odpovědí na místo, kontext a přání klienta.
-  dragHint: Táhněte pro další
 process:
   index: '02'
   eyebrow: Proces
-  title: Jak to u nás funguje
+  title: Jak to u nás
+  titleAccent: funguje
   description: >-
     Od prvního setkání až po hotovou stavbu vás provedeme každým krokem.
     Transparentně, profesionálně a vždy s ohledem na váš záměr.
@@ -16,7 +17,8 @@ process:
 bim:
   index: '03'
   eyebrow: Technologie
-  title: Pracujeme v BIMu
+  title: Pracujeme
+  titleAccent: v BIMu
   description: >-
     Navrhujeme v BIMu. Díky tomu máme pod kontrolou každý detail – od prvního
     náčrtu po realizaci.
@@ -33,11 +35,13 @@ bim:
 team:
   index: '04'
   eyebrow: Ateliér
-  title: Kdo za tím stojí
+  title: Kdo za tím
+  titleAccent: stojí
 cta:
   index: ''
   eyebrow: ''
-  title: Máte v hlavě projekt?
+  title: Máte v hlavě
+  titleAccent: projekt?
   text: >-
     Ozvěte se nám a nezávazně probereme vaše možnosti. První konzultace je
     zdarma.
@@ -47,6 +51,7 @@ cta:
 contact:
   index: '05'
   eyebrow: Kontakt
-  title: Pojďme to probrat
+  title: Pojďme to
+  titleAccent: probrat
   formTitle: Napište nám
   submitLabel: Odeslat zprávu

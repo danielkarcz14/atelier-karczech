@@ -13,8 +13,8 @@ interface Heading {
   index?: string;
   eyebrow?: string;
   title?: string;
+  titleAccent?: string;
   description?: string;
-  dragHint?: string;
 }
 
 interface Props {
@@ -33,12 +33,13 @@ const countLabel = (n: number) => {
 ---
 
 <section id="portfolio" class="py-24 md:py-36">
-  <div class="max-w-7xl mx-auto px-6 lg:px-12">
+  <div class="page-shell">
     <div class="reveal">
       <SectionTitle
         index={heading.index}
         eyebrow={heading.eyebrow}
         title={heading.title}
+        titleAccent={heading.titleAccent}
         meta={items.length > 0 ? countLabel(items.length) : ''}
       />
       {
@@ -49,26 +50,17 @@ const countLabel = (n: number) => {
         )
       }
     </div>
-  </div>
 
-  <div class="portfolio-wrapper mt-16">
-    <button type="button" id="portfolioPrev" class="portfolio-arrow prev is-hidden" aria-label="Předchozí projekty">
-      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7"></path>
-      </svg>
-    </button>
-
-    <button type="button" id="portfolioNext" class="portfolio-arrow next" aria-label="Další projekty">
-      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"></path>
-      </svg>
-    </button>
-
-    <div class="portfolio-track" id="portfolioTrack">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12 mt-16">
       {
         items.map((item, i) => (
-          <div class="portfolio-card w-[85vw] md:w-[55vw] lg:w-[40vw] cursor-pointer" data-full={item.imageFull}>
-            <div class="aspect-[16/10] overflow-hidden rounded-[2px]">
+          <button
+            type="button"
+            class="portfolio-card group text-left cursor-pointer"
+            data-full={item.imageFull}
+            aria-label={`Zvětšit projekt ${item.title}`}
+          >
+            <div class="aspect-[4/3] overflow-hidden rounded-[2px] bg-brand-900">
               <img
                 src={item.image}
                 alt={item.alt ?? item.title}
@@ -77,28 +69,20 @@ const countLabel = (n: number) => {
                 decoding="async"
               />
             </div>
-            <div class="grid grid-cols-[2.5rem_1fr] gap-4 pt-5">
-              <span class="text-brand-600 text-xs tabular-nums pt-2">{String(i + 1).padStart(2, '0')}</span>
+            <div class="grid grid-cols-[2rem_1fr] gap-3 border-t border-brand-800/40 mt-4 pt-4">
+              <span class="text-brand-600 text-xs tabular-nums pt-1.5">
+                {String(i + 1).padStart(2, '0')}
+              </span>
               <div>
-                <h3 class="font-serif text-xl md:text-2xl font-semibold text-white tracking-tight">{item.title}</h3>
+                <h3 class="font-sans text-base md:text-lg font-bold text-white tracking-tight group-hover:text-accent transition-colors">
+                  {item.title}
+                </h3>
                 <p class="text-brand-500 text-sm mt-1 font-light">{item.category}</p>
               </div>
             </div>
-          </div>
+          </button>
         ))
       }
     </div>
   </div>
-
-  {
-    heading.dragHint && (
-      <div class="max-w-7xl mx-auto px-6 lg:px-12 mt-12 flex items-center gap-4">
-        <div class="h-px flex-1 bg-brand-800/40" />
-        <span class="text-xs text-brand-600">{heading.dragHint}</span>
-        <svg class="w-4 h-4 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-        </svg>
-      </div>
-    )
-  }
 </section>

@@ -3,13 +3,14 @@ import SectionTitle from './SectionTitle.astro';
 
 interface Props {
   title?: string;
+  titleAccent?: string;
   text?: string;
   buttonLabel?: string;
   buttonHref?: string;
   image?: string;
 }
 
-const { title, text, buttonLabel, buttonHref, image = '/images/cta.webp' } = Astro.props;
+const { title, titleAccent, text, buttonLabel, buttonHref, image = '/images/cta.webp' } = Astro.props;
 ---
 
 <section class="relative overflow-hidden border-y border-brand-800/40">
@@ -18,10 +19,10 @@ const { title, text, buttonLabel, buttonHref, image = '/images/cta.webp' } = Ast
     <div class="absolute inset-0 bg-gradient-to-r from-brand-950 via-brand-950/95 to-brand-950/75"></div>
   </div>
 
-  <div class="relative max-w-7xl mx-auto px-6 lg:px-12 py-24 md:py-32">
+  <div class="page-shell relative py-24 md:py-32">
     <div class="grid lg:grid-cols-[1fr_auto] gap-10 lg:gap-16 items-end reveal">
       <div class="max-w-2xl">
-        <SectionTitle title={title} rule={false} />
+        <SectionTitle title={title} titleAccent={titleAccent} />
         {text && <p class="text-brand-300 text-lg font-light leading-relaxed mt-6 max-w-lg">{text}</p>}
       </div>
       {

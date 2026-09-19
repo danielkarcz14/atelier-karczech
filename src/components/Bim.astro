@@ -18,6 +18,7 @@ interface Heading {
   index?: string;
   eyebrow?: string;
   title?: string;
+  titleAccent?: string;
   description?: string;
   stats?: Stat[];
 }
@@ -36,10 +37,10 @@ const isCountable = (value: string) => /^\d+$/.test(value.trim());
 ---
 
 <section id="bim" class="py-24 md:py-36">
-  <div class="max-w-7xl mx-auto px-6 lg:px-12">
+  <div class="page-shell">
     <div class="grid lg:grid-cols-2 gap-16 lg:gap-24 items-start">
       <div class="reveal lg:sticky lg:top-32">
-        <SectionTitle index={heading.index} eyebrow={heading.eyebrow} title={heading.title} />
+        <SectionTitle index={heading.index} eyebrow={heading.eyebrow} title={heading.title} titleAccent={heading.titleAccent} />
         {
           heading.description && (
             <p class="text-brand-300 text-lg font-light leading-relaxed max-w-md mt-8">{heading.description}</p>
@@ -54,14 +55,14 @@ const isCountable = (value: string) => /^\d+$/.test(value.trim());
                   <dd>
                     {isCountable(stat.value) ? (
                       <div
-                        class="counter font-serif text-3xl md:text-4xl font-semibold text-accent tabular-nums"
+                        class="counter font-sans text-3xl md:text-4xl font-extrabold text-accent tabular-nums tracking-tight"
                         data-target={stat.value.trim()}
                         data-suffix={stat.suffix ?? ''}
                       >
                         0{stat.suffix}
                       </div>
                     ) : (
-                      <div class="font-serif text-3xl md:text-4xl font-semibold text-accent">
+                      <div class="font-sans text-3xl md:text-4xl font-extrabold text-accent tracking-tight">
                         {stat.value}
                         {stat.suffix}
                       </div>
@@ -107,7 +108,7 @@ const isCountable = (value: string) => /^\d+$/.test(value.trim());
           ) : (
             <div class="border border-brand-800/50 rounded-[2px] aspect-[4/3] flex items-center justify-center">
               <div class="text-center p-12">
-                <p class="text-brand-400 font-serif text-lg">BIM vizualizace</p>
+                <p class="text-brand-400 font-sans text-lg font-medium">BIM vizualizace</p>
                 <p class="text-brand-600 text-sm mt-2 font-light">Brzy doplníme</p>
               </div>
             </div>
