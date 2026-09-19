@@ -5,6 +5,7 @@ function init() {
   initParallax();
   initScrollReveal();
   initCounters();
+  initPortfolioFilter();
   initBimSlider();
   initStepStagger();
   initContactForm();
@@ -128,6 +129,40 @@ function initCounters() {
     { threshold: 0.5 }
   );
   document.querySelectorAll('.counter').forEach((el) => observer.observe(el));
+}
+
+function initPortfolioFilter() {
+  const filter = document.getElementById('portfolioFilter');
+  const grid = document.getElementById('portfolioGrid');
+  if (!filter || !grid) return;
+
+  const chips = [...filter.querySelectorAll('.filter-chip')];
+  const cards = [...grid.querySelectorAll('.portfolio-card')];
+  // The section label doubles as a live count of what is currently shown.
+  const counter = document.querySelector('.section-label-meta');
+
+  function countLabel(n) {
+    if (n === 1) return '1 projekt';
+    if (n >= 2 && n <= 4) return n + ' projekty';
+    return n + ' projektů';
+  }
+
+  filter.addEventListener('click', (e) => {
+    const chip = e.target.closest('.filter-chip');
+    if (!chip) return;
+
+    const wanted = chip.dataset.filter;
+    chips.forEach((c) => c.classList.toggle('is-active', c === chip));
+
+    let shown = 0;
+    cards.forEach((card) => {
+      const match = !wanted || card.dataset.category === wanted;
+      card.hidden = !match;
+      if (match) shown++;
+    });
+
+    if (counter) counter.textContent = countLabel(shown);
+  });
 }
 
 function initBimSlider() {

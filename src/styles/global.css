@@ -382,6 +382,26 @@ html {
   transform: scale(1.04);
 }
 
+/* === PORTFOLIO FILTER === */
+.filter-chip {
+  font-size: 0.875rem;
+  font-weight: 300;
+  color: #8c7660;
+  cursor: pointer;
+  background: none;
+  border: 0;
+  padding: 0;
+  transition: color 0.3s ease;
+}
+
+.filter-chip:hover {
+  color: #d1c5b5;
+}
+
+.filter-chip.is-active {
+  color: #c8a97e;
+}
+
 /* === BIM SLIDER === */
 .bim-slider {
   position: relative;

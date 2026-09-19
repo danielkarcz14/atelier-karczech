@@ -47,6 +47,8 @@ const portfolioItems = (await reader.collections.portfolio.all())
   .map(({ entry }) => ({
     title: entry.title,
     category: entry.category,
+    location: entry.location,
+    year: entry.year,
     image: url(entry.image),
     // Falling back to the card image keeps the lightbox working even when no
     // large version was uploaded.

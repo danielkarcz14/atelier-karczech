@@ -53,7 +53,16 @@ export default config({
         title: fields.slug({ name: { label: 'Název projektu' } }),
         category: fields.text({
           label: 'Kategorie',
-          description: 'Např. Interiérový design, Exteriérový návrh, Architektonická studie',
+          description:
+            'Např. Interiérový design, Exteriérový návrh, Architektonická studie. Podle kategorií se dá galerie filtrovat, tak je pište stejně.',
+        }),
+        location: fields.text({
+          label: 'Místo',
+          description: 'Např. Český Těšín. Prázdné = nezobrazí se.',
+        }),
+        year: fields.text({
+          label: 'Rok',
+          description: 'Rok dokončení, např. 2025. Prázdné = nezobrazí se.',
         }),
         order: fields.integer({
           label: 'Pořadí',
