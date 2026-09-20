@@ -71,21 +71,23 @@ const rows = [
 
   {
     showMap && hasCoords && (
-      /* Where we are, before how to reach us. Runs edge to edge like the
-         CTA strip above, but short — a strip, not a panel. */
-      <div class="map-band mt-14 md:mt-16 border-y border-brand-800/40">
-        {/* The src is attached by main.js once the band scrolls close: the
-            embed measures itself once on load, and a lazy iframe can load
-            before the full-width band has its final size — which left the
-            map rendered into a corner of it. Loading it late also means
-            OpenStreetMap only hears from visitors who reach the map. */}
-        <iframe
-          data-src={mapEmbed}
-          class="w-full h-full block"
-          style="border:0"
-          referrerpolicy="no-referrer-when-downgrade"
-          title={`Mapa – ${address}`}
-        />
+      /* Inside the shell: heading, map and both columns then share one left
+         and one right edge, which is what makes the section read as tidy. */
+      <div class="page-shell mt-14 md:mt-16">
+        <div class="map-band border border-brand-800/40">
+          {/* The src is attached by main.js once the band scrolls close: the
+              embed measures itself once on load, and an iframe that loads
+              before the band has its final size ends up drawn into a corner
+              of it. Loading it late also means OpenStreetMap only hears from
+              visitors who reach the map. */}
+          <iframe
+            data-src={mapEmbed}
+            class="w-full h-full block"
+            style="border:0"
+            referrerpolicy="no-referrer-when-downgrade"
+            title={`Mapa – ${address}`}
+          />
+        </div>
       </div>
     )
   }
@@ -99,7 +101,7 @@ const rows = [
         <dl class="space-y-7">
           {
             rows.map((row) => (
-              <div class="pb-3 border-b border-brand-800/40">
+              <div>
                 <dt class="field-label mb-2">{row.label}</dt>
                 <dd class="text-lg break-words">
                   {row.href ? (
@@ -115,7 +117,7 @@ const rows = [
           }
           {
             address && (
-              <div class="pb-3 border-b border-brand-800/40">
+              <div>
                 <dt class="field-label mb-2">Adresa</dt>
                 <dd class="text-lg leading-snug">
                   {hasCoords ? (
