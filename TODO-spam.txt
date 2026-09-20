@@ -1,0 +1,87 @@
+ÚKLID PO NAPADENÉM WORDPRESSU — CO ZBÝVÁ UDĚLAT
+================================================
+
+Doména má ve vyhledávačích zaindexováno ~3040 adres se spamem (kasina, NFT,
+blackjack) z doby, kdy tu běžel WordPress. Samotný WordPress je pryč — web
+byl přestavěn na Astro a běží na Netlify, takže není co čistit: žádná
+databáze, pluginy ani cron. Zbývá jen vyčistit index vyhledávače.
+
+
+CO UŽ JE HOTOVÉ (nic z toho nedělejte znovu)
+---------------------------------------------
+[x] Staré adresy vracejí 410 Gone místo 404
+    Pravidla jsou v netlify.toml, 22 prefixů pokrývá 97 % adres.
+    Ověřeno na ostré doméně: /uncategorized/, /blog/x/, /news/ → 410
+
+[x] robots.txt ty adresy ZÁMĚRNĚ neblokuje
+    Zní to naopak, ale zakázanou adresu crawler nenavštíví, takže se nikdy
+    nedozví, že je pryč. Přesně tak spam v indexu uvízne na roky.
+    NEPŘIDÁVEJTE je do Disallow.
+
+[x] Ověřovací soubor Search Console v public/
+    googlecb8e5ad24814c115.html — NIKDY NEMAZAT, Google ověření přeposílá
+    a bez něj přijdete o přístup ke službě.
+
+[x] Mapa stránek odeslaná do Search Console
+
+
+CO JE POTŘEBA UDĚLAT — Google Search Console
+---------------------------------------------
+search.google.com/search-console
+
+1) ODSTRANĚNÍ SPAMOVÝCH ADRES
+   Levé menu: Indexování → Odstranění
+   Záložka "Dočasná odstranění" → Nový požadavek
+   → "Dočasně odstranit adresu URL"
+   → zvolit "Odstranit všechny adresy URL s touto předponou"
+      (NE "Odstranit pouze tuto adresu URL")
+
+   Postupně zadat a odeslat těchto osm:
+     https://atelierkarczech.cz/uncategorized/
+     https://atelierkarczech.cz/news/
+     https://atelierkarczech.cz/blog/
+     https://atelierkarczech.cz/category/
+     https://atelierkarczech.cz/public/
+     https://atelierkarczech.cz/post/
+     https://atelierkarczech.cz/computers-games/
+     https://atelierkarczech.cz/tag/
+
+   Pozor: tohle je skrytí na ~6 měsíců, ne trvalé odstranění. Trvale to
+   řeší ta 410 odpověď. Obojí funguje dohromady — odstranění zabere hned,
+   410 dokončí práci na pozadí.
+
+2) KONTROLA PO NAPADENÍ
+   Levé menu dole: Zabezpečení a ruční akce
+   Projít obě položky:
+     - Ruční akce            (postih od Googlu za spam)
+     - Problémy se zabezpečením
+   U obou chcete vidět "Nebyly zjištěny žádné problémy".
+   Kdyby tam něco bylo: po vyčištění se podává žádost o opětovné posouzení
+   a je dobré v ní uvést, že web byl kompletně přestavěn, WordPress
+   odstraněn a staré adresy vracejí 410.
+
+3) SLEDOVAT PRŮBĚH
+   Levé menu: Indexování → Stránky
+   Ukazuje, kolik adres Google eviduje. Číslo má postupně klesat.
+   Data se plní 1–3 dny po ověření, prázdné reporty na začátku jsou normální.
+
+
+ČASOVÝ ODHAD
+-------------
+Úplné vyčištění indexu trvá týdny až měsíce. Rychlejší cesta neexistuje.
+Odstranění předpon zabere během hodin, ale je dočasné; 410 pracuje na
+pozadí a je trvalé.
+
+
+JAK SI OVĚŘIT, ŽE 410 POŘÁD FUNGUJE
+------------------------------------
+    curl -s -o /dev/null -w "%{http_code}\n" https://atelierkarczech.cz/uncategorized/
+
+Má vrátit 410. Kdyby vrátilo 404, něco se stalo s pravidly v netlify.toml.
+
+
+POZOR DO BUDOUCNA
+------------------
+V netlify.toml je mimo jiné pravidlo pro /blog/*. Kdyby na webu měl někdy
+vzniknout skutečný blog, je potřeba to pravidlo nejdřív smazat, jinak by
+nové články vracely 410.

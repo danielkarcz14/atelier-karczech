@@ -51,12 +51,12 @@ const isCountable = (value: string) => /^\d+$/.test(value.trim());
         }
         {
           stats.length > 0 && (
-            <dl class="flex flex-wrap gap-x-10 gap-y-8 mt-12 border-t border-brand-800/40 pt-8">
+            <dl class="flex flex-wrap gap-x-5 sm:gap-x-10 gap-y-8 mt-12 border-t border-brand-800/40 pt-8">
               {stats.map((stat) => (
                 <div>
                   <dt class="sr-only">{stat.label}</dt>
                   <dd>
-                    <div class="font-display text-3xl md:text-4xl font-bold text-accent tracking-tight flex items-baseline gap-1.5 whitespace-nowrap">
+                    <div class="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-accent tracking-tight flex items-baseline gap-1.5 whitespace-nowrap">
                       {/* Same size as the figure; the lighter weight keeps the number leading. */}
                       {stat.prefix && <span class="font-medium">{stat.prefix}</span>}
                       {isCountable(stat.value) ? (
