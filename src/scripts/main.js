@@ -111,6 +111,20 @@ function initScrollReveal() {
 }
 
 function initCounters() {
+  const counters = [...document.querySelectorAll('.counter')];
+  if (counters.length === 0) return;
+
+  // The markup carries the final figure so it is in the HTML for crawlers.
+  // Anyone who asked for less motion keeps exactly that and nothing moves.
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  // Zero them here, while they are still far below the fold, so the count
+  // has somewhere to start without the visitor seeing the value jump back.
+  counters.forEach((el) => {
+    if (!parseInt(el.dataset.target)) return;
+    el.textContent = '0' + (el.dataset.suffix || '');
+  });
+
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -136,7 +150,8 @@ function initCounters() {
     },
     { threshold: 0.5 }
   );
-  document.querySelectorAll('.counter').forEach((el) => observer.observe(el));
+
+  counters.forEach((el) => observer.observe(el));
 }
 
 function initPortfolioFilter() {

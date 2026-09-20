@@ -36,3 +36,148 @@
   for = "/fonts/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+
+# ---------------------------------------------------------------------------
+# Pozůstatky po napadeném WordPressu. Doména měla zaindexovaných ~3040 URL
+# se spamem (kasina, NFT). Samotný WordPress je pryč a tyto adresy už vracejí
+# 404, ale 410 Gone říká vyhledávači natvrdo „tohle se nikdy nevrátí“, takže
+# je z indexu vyhodí rychleji. Níže uvedené prefixy pokrývají 97 % těch URL.
+#
+# Pozor: tyhle adresy NESMÍ být zakázané v robots.txt – vyhledávač se na ně
+# musí dostat, aby to 410 vůbec uviděl.
+#
+# Kdyby na webu někdy měl vzniknout skutečný blog, pravidlo /blog/* je nutné
+# nejdřív smazat.
+# ---------------------------------------------------------------------------
+
+[[redirects]]
+  from = "/uncategorized/*"
+  to = "/404.html"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/uncategorized-2/*"
+  to = "/404.html"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/news/*"
+  to = "/404.html"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/blog/*"
+  to = "/404.html"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/category/*"
+  to = "/404.html"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/public/*"
+  to = "/404.html"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/post/*"
+  to = "/404.html"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/computers-games/*"
+  to = "/404.html"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/tag/*"
+  to = "/404.html"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/wp-content/*"
+  to = "/404.html"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/wp-includes/*"
+  to = "/404.html"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/wp-admin/*"
+  to = "/404.html"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/teksta/*"
+  to = "/404.html"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/apk/*"
+  to = "/404.html"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/bez-rubriki/*"
+  to = "/404.html"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/bookkeeping/*"
+  to = "/404.html"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/om/*"
+  to = "/404.html"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/om-cc/*"
+  to = "/404.html"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/sober-living/*"
+  to = "/404.html"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/author/*"
+  to = "/404.html"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/casino/*"
+  to = "/404.html"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/feed/*"
+  to = "/404.html"
+  status = 410
+  force = true

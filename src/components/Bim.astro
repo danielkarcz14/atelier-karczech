@@ -33,7 +33,9 @@ const { renders = [], heading } = Astro.props;
 const stats = heading.stats ?? [];
 
 // A stat that is nothing but digits counts up on scroll; anything else
-// (3D, LOD, …) is rendered as-is.
+// (3D, LOD, …) is rendered as-is. Either way the final figure is what ships
+// in the HTML, so a crawler — or a visitor without JS — reads 100 %, not the
+// zero the animation starts from; main.js zeroes it before it scrolls in.
 const isCountable = (value: string) => /^\d+$/.test(value.trim());
 ---
 
@@ -63,7 +65,7 @@ const isCountable = (value: string) => /^\d+$/.test(value.trim());
                           data-target={stat.value.trim()}
                           data-suffix={stat.suffix ?? ''}
                         >
-                          0{stat.suffix}
+                          {stat.value.trim()}{stat.suffix}
                         </span>
                       ) : (
                         <span>
