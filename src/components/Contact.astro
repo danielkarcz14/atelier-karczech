@@ -41,59 +41,59 @@ const lon = Number(mapLon);
 const hasCoords = Number.isFinite(lat) && Number.isFinite(lon) && (lat !== 0 || lon !== 0);
 const address = [addressLine1, addressLine2].filter(Boolean).join(', ');
 
-// OpenStreetMap needs a bounding box for the embed; a ±0.003° / ±0.006° box
-// around the marker is roughly a street-level view.
+// OpenStreetMap needs a bounding box for the embed. The band is wide and
+// short, so the box is stretched horizontally to match its proportions.
 const mapLink = hasCoords
-  ? `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lon}#map=18/${lat}/${lon}`
+  ? `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lon}#map=17/${lat}/${lon}`
   : '';
 const mapEmbed = hasCoords
-  ? `https://www.openstreetmap.org/export/embed.html?bbox=${lon - 0.006}%2C${lat - 0.003}%2C${lon + 0.006}%2C${lat + 0.003}&layer=mapnik&marker=${lat}%2C${lon}`
+  ? `https://www.openstreetmap.org/export/embed.html?bbox=${lon - 0.012}%2C${lat - 0.0025}%2C${lon + 0.012}%2C${lat + 0.0025}&layer=mapnik&marker=${lat}%2C${lon}`
   : '';
+
+const rows = [
+  { label: 'Kontaktní osoba', value: contactPerson, href: '' },
+  { label: 'Telefon', value: phone, href: phoneHref ? `tel:${phoneHref}` : '' },
+  { label: 'E-mail', value: email, href: email ? `mailto:${email}` : '' },
+].filter((row) => row.value);
 ---
 
-<section id="kontakt" class="py-24 md:py-36">
+<section id="kontakt" class="pt-24 md:pt-36">
   <div class="page-shell">
-    <div class="grid lg:grid-cols-2 gap-16 lg:gap-24">
-      <div class="reveal">
-        <SectionTitle index={heading.index} eyebrow={heading.eyebrow} title={heading.title} titleAccent={heading.titleAccent} />
+    <div class="reveal">
+      <SectionTitle
+        index={heading.index}
+        eyebrow={heading.eyebrow}
+        title={heading.title}
+        titleAccent={heading.titleAccent}
+      />
+    </div>
 
-        <dl class="mt-12">
+    <div class="grid lg:grid-cols-2 gap-x-16 gap-y-14 mt-16">
+      <div class="reveal">
+        {/* Same rhythm as the form beside it: small label on top, content
+            below, hairline underneath, identical spacing. */}
+        <h3 class="font-display text-xl font-bold tracking-tight mb-8">Kde nás najdete</h3>
+        <dl class="space-y-7">
           {
-            contactPerson && (
-              <div class="grid gap-1 sm:grid-cols-[9rem_1fr] sm:gap-4 py-5 border-t border-brand-800/40">
-                <dt class="text-xs text-brand-600 pt-1">Kontaktní osoba</dt>
-                <dd class="text-lg">{contactPerson}</dd>
-              </div>
-            )
-          }
-          {
-            phone && (
-              <div class="grid gap-1 sm:grid-cols-[9rem_1fr] sm:gap-4 py-5 border-t border-brand-800/40">
-                <dt class="text-xs text-brand-600 pt-1">Telefon</dt>
-                <dd class="text-lg">
-                  <a href={`tel:${phoneHref}`} class="hover:text-accent transition-colors">
-                    {phone}
-                  </a>
-                </dd>
-              </div>
-            )
-          }
-          {
-            email && (
-              <div class="grid gap-1 sm:grid-cols-[9rem_1fr] sm:gap-4 py-5 border-t border-brand-800/40">
-                <dt class="text-xs text-brand-600 pt-1">E-mail</dt>
+            rows.map((row) => (
+              <div class="pb-3 border-b border-brand-800/40">
+                <dt class="text-xs text-brand-600 mb-2">{row.label}</dt>
                 <dd class="text-lg break-words">
-                  <a href={`mailto:${email}`} class="hover:text-accent transition-colors">
-                    {email}
-                  </a>
+                  {row.href ? (
+                    <a href={row.href} class="hover:text-accent transition-colors">
+                      {row.value}
+                    </a>
+                  ) : (
+                    row.value
+                  )}
                 </dd>
               </div>
-            )
+            ))
           }
           {
             address && (
-              <div class="grid gap-1 sm:grid-cols-[9rem_1fr] sm:gap-4 py-5 border-y border-brand-800/40">
-                <dt class="text-xs text-brand-600 pt-1">Adresa</dt>
+              <div class="pb-3 border-b border-brand-800/40">
+                <dt class="text-xs text-brand-600 mb-2">Adresa</dt>
                 <dd class="text-lg leading-snug">
                   {hasCoords ? (
                     <a href={mapLink} target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors">
@@ -113,24 +113,9 @@ const mapEmbed = hasCoords
             )
           }
         </dl>
-
-        {
-          showMap && hasCoords && (
-            <div class="mt-10 overflow-hidden rounded-[2px] border border-brand-800/40 aspect-[16/10]">
-              <iframe
-                src={mapEmbed}
-                class="w-full h-full"
-                style="border:0"
-                loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade"
-                title={`Mapa – ${address}`}
-              />
-            </div>
-          )
-        }
       </div>
 
-      <div class="reveal reveal-delay-1 lg:pt-20">
+      <div class="reveal reveal-delay-1">
         <h3 class="font-display text-xl font-bold tracking-tight mb-8">{heading.formTitle}</h3>
         <form id="contactForm" action="/.netlify/functions/contact" method="POST" class="space-y-7" novalidate>
           <!-- Honeypot: hidden field (display:none) that humans never fill in, but bots do. -->
@@ -152,7 +137,7 @@ const mapEmbed = hasCoords
           </div>
           <div>
             <label for="message" class="block text-xs text-brand-600 mb-2">Zpráva</label>
-            <textarea id="message" name="message" rows="5" required class="form-input w-full py-3 text-white placeholder-brand-700 resize-none" placeholder="Popište váš záměr..."></textarea>
+            <textarea id="message" name="message" rows="4" required class="form-input w-full py-3 text-white placeholder-brand-700 resize-none" placeholder="Popište váš záměr..."></textarea>
           </div>
           <button type="submit" class="btn-primary bg-accent text-brand-950 px-8 py-4 rounded-[2px] font-semibold text-sm tracking-wide hover:text-brand-950 transition-colors disabled:opacity-60 disabled:cursor-not-allowed">
             {heading.submitLabel}
@@ -162,4 +147,25 @@ const mapEmbed = hasCoords
       </div>
     </div>
   </div>
+
+  {
+    showMap && hasCoords && (
+      /* Full-bleed band closing the page, the way the CTA strip above it
+         runs edge to edge. A map this wide is finally usable as a map. */
+      <div class="map-band mt-24 md:mt-32 border-t border-brand-800/40">
+        {/* The src is attached by main.js once the band scrolls close: the
+            embed measures itself once on load, and a lazy iframe can load
+            before the full-width band has its final size — which left the
+            map rendered into a corner of it. Loading it late also means
+            OpenStreetMap only hears from visitors who reach the map. */}
+        <iframe
+          data-src={mapEmbed}
+          class="w-full h-full block"
+          style="border:0"
+          referrerpolicy="no-referrer-when-downgrade"
+          title={`Mapa – ${address}`}
+        />
+      </div>
+    )
+  }
 </section>

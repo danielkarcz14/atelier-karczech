@@ -684,6 +684,20 @@ html {
   }
 }
 
+/* === MAP BAND ===
+   Runs the full width of the window rather than the content column, so it
+   closes the page the way the CTA strip opens the contact area. */
+.map-band {
+  height: 360px;
+  background: #504238;
+}
+
+@media (min-width: 768px) {
+  .map-band {
+    height: 460px;
+  }
+}
+
 /* === FORM === */
 /* The page is built from hairlines, not boxes — the form follows suit, so
    it reads as part of the contact section rather than a widget dropped on

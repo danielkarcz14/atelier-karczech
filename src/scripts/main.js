@@ -8,6 +8,7 @@ function init() {
   initPortfolioFilter();
   initBimSlider();
   initStepStagger();
+  initMapBand();
   initContactForm();
 }
 
@@ -209,6 +210,27 @@ function initStepStagger() {
   document.querySelectorAll('.step-card').forEach((card, i) => {
     card.style.transitionDelay = `${i * 0.1}s`;
   });
+}
+
+function initMapBand() {
+  const frame = document.querySelector('.map-band iframe[data-src]');
+  if (!frame) return;
+
+  if (!('IntersectionObserver' in window)) {
+    frame.src = frame.dataset.src;
+    return;
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      if (!entries.some((entry) => entry.isIntersecting)) return;
+      frame.src = frame.dataset.src;
+      observer.disconnect();
+    },
+    { rootMargin: '400px' }
+  );
+
+  observer.observe(frame);
 }
 
 function initContactForm() {
