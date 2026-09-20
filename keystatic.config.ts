@@ -313,6 +313,10 @@ export default config({
             }),
             stats: fields.array(
               fields.object({
+                prefix: fields.text({
+                  label: 'Předpona před hodnotou',
+                  description: 'Např. „LOD až“. Zůstane stát, zatímco se číslo dopočítává.',
+                }),
                 value: fields.text({
                   label: 'Hodnota',
                   description:

@@ -163,6 +163,7 @@ const heroMarquee = (heroContent?.marquee ?? []).filter(Boolean);
       titleAccent: sections?.bim?.titleAccent,
       description: sections?.bim?.description,
       stats: (sections?.bim?.stats ?? []).map((stat) => ({
+        prefix: stat.prefix,
         value: stat.value,
         suffix: stat.suffix,
         label: stat.label,

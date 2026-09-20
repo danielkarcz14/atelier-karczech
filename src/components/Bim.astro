@@ -9,6 +9,7 @@ interface Render {
 }
 
 interface Stat {
+  prefix?: string;
   value: string;
   suffix?: string;
   label: string;
@@ -53,20 +54,24 @@ const isCountable = (value: string) => /^\d+$/.test(value.trim());
                 <div>
                   <dt class="sr-only">{stat.label}</dt>
                   <dd>
-                    {isCountable(stat.value) ? (
-                      <div
-                        class="counter font-display text-3xl md:text-4xl font-bold text-accent tabular-nums tracking-tight"
-                        data-target={stat.value.trim()}
-                        data-suffix={stat.suffix ?? ''}
-                      >
-                        0{stat.suffix}
-                      </div>
-                    ) : (
-                      <div class="font-display text-3xl md:text-4xl font-bold text-accent tracking-tight">
-                        {stat.value}
-                        {stat.suffix}
-                      </div>
-                    )}
+                    <div class="font-display text-3xl md:text-4xl font-bold text-accent tracking-tight flex items-baseline gap-1.5 whitespace-nowrap">
+                      {/* Smaller than the figure, so the number still reads as the stat. */}
+                      {stat.prefix && <span class="text-base md:text-lg font-medium">{stat.prefix}</span>}
+                      {isCountable(stat.value) ? (
+                        <span
+                          class="counter tabular-nums"
+                          data-target={stat.value.trim()}
+                          data-suffix={stat.suffix ?? ''}
+                        >
+                          0{stat.suffix}
+                        </span>
+                      ) : (
+                        <span>
+                          {stat.value}
+                          {stat.suffix}
+                        </span>
+                      )}
+                    </div>
                     <div class="text-xs text-brand-500 mt-2 leading-snug">{stat.label}</div>
                   </dd>
                 </div>

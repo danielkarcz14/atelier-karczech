@@ -685,16 +685,24 @@ html {
 }
 
 /* === FORM === */
+/* The page is built from hairlines, not boxes — the form follows suit, so
+   it reads as part of the contact section rather than a widget dropped on
+   top of it. */
 .form-input {
-  border: 1px solid rgba(200, 169, 126, 0.2);
-  background: rgba(255, 255, 255, 0.03);
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  border: 0;
+  border-bottom: 1px solid rgba(200, 169, 126, 0.25);
+  border-radius: 0;
+  background: transparent;
+  transition: border-color 0.3s ease;
 }
 
 .form-input:focus {
-  border-color: #c8a97e;
-  box-shadow: 0 0 0 3px rgba(200, 169, 126, 0.1);
+  border-bottom-color: #c8a97e;
   outline: none;
+}
+
+.form-input::placeholder {
+  opacity: 0.55;
 }
 
 /* Honeypot – display:none so browsers and password managers do not autofill it,

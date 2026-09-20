@@ -132,7 +132,7 @@ const mapEmbed = hasCoords
 
       <div class="reveal reveal-delay-1 lg:pt-20">
         <h3 class="font-display text-xl font-bold tracking-tight mb-8">{heading.formTitle}</h3>
-        <form id="contactForm" action="/.netlify/functions/contact" method="POST" class="space-y-6" novalidate>
+        <form id="contactForm" action="/.netlify/functions/contact" method="POST" class="space-y-7" novalidate>
           <!-- Honeypot: hidden field (display:none) that humans never fill in, but bots do. -->
           <div class="hp-field" aria-hidden="true">
             <label for="_gotcha">Nevyplňovat</label>
@@ -140,21 +140,21 @@ const mapEmbed = hasCoords
           </div>
           <div>
             <label for="name" class="block text-xs text-brand-600 mb-2">Jméno a příjmení</label>
-            <input type="text" id="name" name="name" required class="form-input w-full px-4 py-3.5 rounded-[2px] text-white placeholder-brand-700" placeholder="Jan Novák" />
+            <input type="text" id="name" name="name" required class="form-input w-full py-3 text-white placeholder-brand-700" placeholder="Jan Novák" />
           </div>
           <div>
             <label for="email" class="block text-xs text-brand-600 mb-2">E-mail</label>
-            <input type="email" id="email" name="email" required class="form-input w-full px-4 py-3.5 rounded-[2px] text-white placeholder-brand-700" placeholder="jan@email.cz" />
+            <input type="email" id="email" name="email" required class="form-input w-full py-3 text-white placeholder-brand-700" placeholder="jan@email.cz" />
           </div>
           <div>
             <label for="phone" class="block text-xs text-brand-600 mb-2">Telefon</label>
-            <input type="tel" id="phone" name="phone" class="form-input w-full px-4 py-3.5 rounded-[2px] text-white placeholder-brand-700" placeholder="+420 ..." />
+            <input type="tel" id="phone" name="phone" class="form-input w-full py-3 text-white placeholder-brand-700" placeholder="+420 ..." />
           </div>
           <div>
             <label for="message" class="block text-xs text-brand-600 mb-2">Zpráva</label>
-            <textarea id="message" name="message" rows="5" required class="form-input w-full px-4 py-3.5 rounded-[2px] text-white placeholder-brand-700 resize-none" placeholder="Popište váš záměr..."></textarea>
+            <textarea id="message" name="message" rows="5" required class="form-input w-full py-3 text-white placeholder-brand-700 resize-none" placeholder="Popište váš záměr..."></textarea>
           </div>
-          <button type="submit" class="btn-primary w-full bg-accent text-brand-950 py-4 rounded-[2px] font-medium text-sm tracking-wide uppercase hover:text-brand-950 transition-colors disabled:opacity-60 disabled:cursor-not-allowed">
+          <button type="submit" class="btn-primary bg-accent text-brand-950 px-8 py-4 rounded-[2px] font-semibold text-sm tracking-wide hover:text-brand-950 transition-colors disabled:opacity-60 disabled:cursor-not-allowed">
             {heading.submitLabel}
           </button>
           <p id="formStatus" class="form-status" role="status" aria-live="polite"></p>

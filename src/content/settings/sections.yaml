@@ -23,13 +23,16 @@ bim:
     Navrhujeme v BIMu. Díky tomu máme pod kontrolou každý detail – od prvního
     náčrtu po realizaci.
   stats:
-    - value: '100'
+    - prefix: ''
+      value: '100'
       suffix: '%'
       label: digitální
-    - value: 3D
+    - prefix: ''
+      value: 3D
       suffix: ''
       label: Koordinace
-    - value: LOD
+    - prefix: LOD až
+      value: '350'
       suffix: ''
       label: Detailní model
 team:
