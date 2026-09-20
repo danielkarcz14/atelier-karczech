@@ -688,14 +688,23 @@ html {
    Runs the full width of the window rather than the content column, so it
    closes the page the way the CTA strip opens the contact area. */
 .map-band {
-  height: 360px;
+  height: 220px;
   background: #504238;
 }
 
 @media (min-width: 768px) {
   .map-band {
-    height: 460px;
+    height: 320px;
   }
+}
+
+/* Shared by the contact details and the form fields, and set in the same
+   key as the section labels above them. */
+.field-label {
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #8c7660;
 }
 
 /* === FORM === */

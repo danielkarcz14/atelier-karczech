@@ -47,7 +47,7 @@ const mapLink = hasCoords
   ? `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lon}#map=17/${lat}/${lon}`
   : '';
 const mapEmbed = hasCoords
-  ? `https://www.openstreetmap.org/export/embed.html?bbox=${lon - 0.012}%2C${lat - 0.0025}%2C${lon + 0.012}%2C${lat + 0.0025}&layer=mapnik&marker=${lat}%2C${lon}`
+  ? `https://www.openstreetmap.org/export/embed.html?bbox=${lon - 0.016}%2C${lat - 0.0022}%2C${lon + 0.016}%2C${lat + 0.0022}&layer=mapnik&marker=${lat}%2C${lon}`
   : '';
 
 const rows = [
@@ -67,17 +67,40 @@ const rows = [
         titleAccent={heading.titleAccent}
       />
     </div>
+  </div>
 
-    <div class="grid lg:grid-cols-2 gap-x-16 gap-y-14 mt-16">
+  {
+    showMap && hasCoords && (
+      /* Where we are, before how to reach us. Runs edge to edge like the
+         CTA strip above, but short — a strip, not a panel. */
+      <div class="map-band mt-14 md:mt-16 border-y border-brand-800/40">
+        {/* The src is attached by main.js once the band scrolls close: the
+            embed measures itself once on load, and a lazy iframe can load
+            before the full-width band has its final size — which left the
+            map rendered into a corner of it. Loading it late also means
+            OpenStreetMap only hears from visitors who reach the map. */}
+        <iframe
+          data-src={mapEmbed}
+          class="w-full h-full block"
+          style="border:0"
+          referrerpolicy="no-referrer-when-downgrade"
+          title={`Mapa – ${address}`}
+        />
+      </div>
+    )
+  }
+
+  <div class="page-shell">
+    {/* Details need a column; the form needs room. An even split gave the
+        short column too much and the form too little. */}
+    <div class="grid lg:grid-cols-[minmax(0,19rem)_1fr] gap-x-16 gap-y-14 mt-16 md:mt-20">
       <div class="reveal">
-        {/* Same rhythm as the form beside it: small label on top, content
-            below, hairline underneath, identical spacing. */}
         <h3 class="font-display text-xl font-bold tracking-tight mb-8">Kde nás najdete</h3>
         <dl class="space-y-7">
           {
             rows.map((row) => (
               <div class="pb-3 border-b border-brand-800/40">
-                <dt class="text-xs text-brand-600 mb-2">{row.label}</dt>
+                <dt class="field-label mb-2">{row.label}</dt>
                 <dd class="text-lg break-words">
                   {row.href ? (
                     <a href={row.href} class="hover:text-accent transition-colors">
@@ -93,7 +116,7 @@ const rows = [
           {
             address && (
               <div class="pb-3 border-b border-brand-800/40">
-                <dt class="text-xs text-brand-600 mb-2">Adresa</dt>
+                <dt class="field-label mb-2">Adresa</dt>
                 <dd class="text-lg leading-snug">
                   {hasCoords ? (
                     <a href={mapLink} target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors">
@@ -123,49 +146,38 @@ const rows = [
             <label for="_gotcha">Nevyplňovat</label>
             <input type="text" id="_gotcha" name="_gotcha" tabindex="-1" autocomplete="off" />
           </div>
-          <div>
-            <label for="name" class="block text-xs text-brand-600 mb-2">Jméno a příjmení</label>
-            <input type="text" id="name" name="name" required class="form-input w-full py-3 text-white placeholder-brand-700" placeholder="Jan Novák" />
+
+          <div class="grid sm:grid-cols-2 gap-x-8 gap-y-7">
+            <div>
+              <label for="name" class="field-label block mb-2">Jméno a příjmení</label>
+              <input type="text" id="name" name="name" required autocomplete="name" class="form-input w-full py-3 text-white placeholder-brand-700" placeholder="Jan Novák" />
+            </div>
+            <div>
+              <label for="email" class="field-label block mb-2">E-mail</label>
+              <input type="email" id="email" name="email" required autocomplete="email" class="form-input w-full py-3 text-white placeholder-brand-700" placeholder="jan@email.cz" />
+            </div>
           </div>
+
           <div>
-            <label for="email" class="block text-xs text-brand-600 mb-2">E-mail</label>
-            <input type="email" id="email" name="email" required class="form-input w-full py-3 text-white placeholder-brand-700" placeholder="jan@email.cz" />
+            <label for="phone" class="field-label block mb-2">Telefon</label>
+            <input type="tel" id="phone" name="phone" autocomplete="tel" class="form-input w-full py-3 text-white placeholder-brand-700" placeholder="+420 ..." />
           </div>
+
           <div>
-            <label for="phone" class="block text-xs text-brand-600 mb-2">Telefon</label>
-            <input type="tel" id="phone" name="phone" class="form-input w-full py-3 text-white placeholder-brand-700" placeholder="+420 ..." />
+            <label for="message" class="field-label block mb-2">Zpráva</label>
+            <textarea id="message" name="message" rows="5" required class="form-input w-full py-3 text-white placeholder-brand-700 resize-none" placeholder="Popište váš záměr..."></textarea>
           </div>
-          <div>
-            <label for="message" class="block text-xs text-brand-600 mb-2">Zpráva</label>
-            <textarea id="message" name="message" rows="4" required class="form-input w-full py-3 text-white placeholder-brand-700 resize-none" placeholder="Popište váš záměr..."></textarea>
+
+          <div class="flex flex-wrap items-center gap-x-6 gap-y-3 pt-1">
+            <button type="submit" class="btn-primary bg-accent text-brand-950 px-8 py-4 rounded-[2px] font-semibold text-sm tracking-wide hover:text-brand-950 transition-colors disabled:opacity-60 disabled:cursor-not-allowed">
+              {heading.submitLabel}
+            </button>
+            <p class="text-xs text-brand-600">Vaše údaje použijeme jen pro odpověď na tuto zprávu.</p>
           </div>
-          <button type="submit" class="btn-primary bg-accent text-brand-950 px-8 py-4 rounded-[2px] font-semibold text-sm tracking-wide hover:text-brand-950 transition-colors disabled:opacity-60 disabled:cursor-not-allowed">
-            {heading.submitLabel}
-          </button>
+
           <p id="formStatus" class="form-status" role="status" aria-live="polite"></p>
         </form>
       </div>
     </div>
   </div>
-
-  {
-    showMap && hasCoords && (
-      /* Full-bleed band closing the page, the way the CTA strip above it
-         runs edge to edge. A map this wide is finally usable as a map. */
-      <div class="map-band mt-24 md:mt-32 border-t border-brand-800/40">
-        {/* The src is attached by main.js once the band scrolls close: the
-            embed measures itself once on load, and a lazy iframe can load
-            before the full-width band has its final size — which left the
-            map rendered into a corner of it. Loading it late also means
-            OpenStreetMap only hears from visitors who reach the map. */}
-        <iframe
-          data-src={mapEmbed}
-          class="w-full h-full block"
-          style="border:0"
-          referrerpolicy="no-referrer-when-downgrade"
-          title={`Mapa – ${address}`}
-        />
-      </div>
-    )
-  }
 </section>
