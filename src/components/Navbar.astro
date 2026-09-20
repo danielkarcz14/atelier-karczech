@@ -6,6 +6,7 @@ interface NavLink {
 
 interface Props {
   logoPlain: string;
+  homeHref?: string;
   logoAccent: string;
   links: NavLink[];
   ctaLabel: string;
@@ -15,12 +16,12 @@ interface Props {
   email: string;
 }
 
-const { logoPlain, logoAccent, links, ctaLabel, ctaHref, phone, phoneHref, email } = Astro.props;
+const { logoPlain, logoAccent, links, ctaLabel, ctaHref, phone, phoneHref, email, homeHref = '#' } = Astro.props;
 ---
 
 <nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-500 border-b border-transparent">
   <div class="page-shell py-5 flex items-center justify-between">
-    <a href="#" class="relative z-10">
+    <a href={homeHref} class="relative z-10">
       <span class="font-display text-2xl font-semibold tracking-[-0.01em] text-white">
         {logoPlain}<span class="text-accent">{logoAccent}</span>
       </span>

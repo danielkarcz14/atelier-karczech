@@ -6,6 +6,7 @@ interface Props {
   description?: string;
   favicon?: string;
   ogImage?: string;
+  noindex?: boolean;
 }
 
 const {
@@ -13,6 +14,7 @@ const {
   description = 'Ateliér Karczech – architektonický ateliér. Navrhujeme v BIMu, od prvního náčrtu po realizaci.',
   favicon = '/favicon.svg',
   ogImage = '',
+  noindex = false,
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://atelierkarczech.cz');
@@ -27,6 +29,7 @@ const ogImageUrl = ogImage ? new URL(ogImage, canonical).href : '';
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical.href} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
 
     <link rel="icon" href={favicon} />
     <link rel="apple-touch-icon" href={favicon} />

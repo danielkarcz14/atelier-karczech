@@ -1,0 +1,114 @@
+---
+import { createReader } from '@keystatic/core/reader';
+import keystaticConfig from '../../keystatic.config';
+
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+
+const reader = createReader(process.cwd(), keystaticConfig);
+
+const [settings, contact] = await Promise.all([
+  reader.singletons.settings.read(),
+  reader.singletons.contact.read(),
+]);
+
+// Same fallbacks as the home page, so a cleared CMS field never leaves the
+// header or footer empty on the one page people reach by accident.
+const logoPlain = settings?.logoPlain || 'Ateliér';
+const logoAccent = settings?.logoAccent || 'Karczech';
+const favicon = settings?.favicon || '/favicon.svg';
+const navCtaLabel = settings?.navCtaLabel || 'Domluvit konzultaci';
+const navCtaHref = settings?.navCtaHref || '#kontakt';
+const footerCopyright = settings?.footerCopyright || 'Ateliér Karczech';
+
+// The links point at sections of the home page, so from here they need to
+// carry the visitor there first.
+const navLinks = (settings?.navLinks ?? []).map((link) => ({
+  label: link.label,
+  href: link.href.startsWith('#') ? `/${link.href}` : link.href,
+}));
+const ctaHref = navCtaHref.startsWith('#') ? `/${navCtaHref}` : navCtaHref;
+const footerLinks = [...navLinks, { label: 'Kontakt', href: ctaHref }];
+
+const contactPhone = contact?.phone ?? '';
+const contactPhoneHref = contact?.phoneHref ?? '';
+const contactEmail = contact?.email ?? '';
+---
+
+<Layout
+  title={`Stránka nenalezena | ${logoPlain} ${logoAccent}`}
+  description="Tato stránka neexistuje. Vraťte se na úvod nebo nám napište."
+  favicon={favicon}
+  noindex
+>
+  <Navbar
+    homeHref="/"
+    logoPlain={logoPlain}
+    logoAccent={logoAccent}
+    links={navLinks}
+    ctaLabel={navCtaLabel}
+    ctaHref={ctaHref}
+    phone={contactPhone}
+    phoneHref={contactPhoneHref}
+    email={contactEmail}
+  />
+
+  <main class="min-h-screen flex items-center pt-32 pb-24">
+    <div class="page-shell">
+      <div class="max-w-2xl">
+        <p class="section-label">
+          <span class="section-label-left">
+            <span class="section-dash" aria-hidden="true"></span>
+            <span class="section-index">404</span>
+            Chyba
+          </span>
+        </p>
+
+        <h1 class="section-title">
+          Tady nic<br /><span class="text-accent">nestojí</span>
+        </h1>
+
+        <p class="text-brand-400 font-light leading-relaxed mt-8 max-w-md">
+          Stránka, kterou hledáte, neexistuje — nejspíš se změnila adresa nebo je v odkazu
+          překlep. Zkuste to z úvodní stránky.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4 mt-10">
+          <a
+            href="/"
+            class="btn-primary bg-accent text-brand-950 px-8 py-4 rounded-[2px] font-semibold text-center text-sm tracking-wide hover:text-brand-950 transition-colors"
+          >
+            Zpět na úvod
+          </a>
+          <a
+            href="/#portfolio"
+            class="btn-outline inline-flex items-center justify-center gap-2 text-white px-8 py-4 rounded-[2px] font-medium text-sm tracking-wide hover:text-accent transition-colors"
+          >
+            Prohlédnout portfolio
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </a>
+        </div>
+
+        {
+          (contactEmail || contactPhone) && (
+            <p class="text-sm text-brand-600 mt-12">
+              Nebo nám rovnou napište na
+              {contactEmail && <a href={`mailto:${contactEmail}`} class="text-brand-400 hover:text-accent transition-colors">{contactEmail}</a>}{contactEmail && contactPhone && ', případně zavolejte na '}{contactPhone && <a href={`tel:${contactPhoneHref}`} class="text-brand-400 hover:text-accent transition-colors">{contactPhone}</a>}.
+            </p>
+          )
+        }
+      </div>
+    </div>
+  </main>
+
+  <Footer
+    homeHref="/"
+    logoPlain={logoPlain}
+    logoAccent={logoAccent}
+    links={footerLinks}
+    copyright={footerCopyright}
+  />
+</Layout>
