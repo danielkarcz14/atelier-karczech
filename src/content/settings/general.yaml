@@ -1,8 +1,8 @@
 logoPlain: Ateliér
-logoAccent: Karczech
-siteTitle: Ateliér Karczech | Architektura & Projekce
+logoAccent: KarCzech
+siteTitle: Ateliér KarCzech | Architektura & Projekce
 siteDescription: >-
-  Ateliér Karczech – architektonický ateliér. Navrhujeme v BIMu, od prvního
+  Ateliér KarCzech – architektonický ateliér. Navrhujeme v BIMu, od prvního
   náčrtu po realizaci.
 navLinks:
   - label: Portfolio
@@ -15,4 +15,4 @@ navLinks:
     href: '#tym'
 navCtaLabel: Domluvit konzultaci
 navCtaHref: '#kontakt'
-footerCopyright: Ateliér Karczech
+footerCopyright: Ateliér KarCzech
